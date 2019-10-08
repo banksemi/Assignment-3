@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script id="vertex-shader" type="x-shader/x-vertex">
+attribute vec4 vPosition;
+attribute vec4 vColor;
+
+uniform vec4 Offset;
+uniform vec4 OutlineOffset;
+uniform vec4 Scale;
+
+varying vec4 fColor;
+void
+main()
+{
+    gl_Position = vPosition;
+
+    gl_Position.xy += (Offset.xy / Scale.xy);
+    gl_Position.xy = (gl_Position.xy - 500.0) / 500.0;
+    gl_Position.y = -gl_Position.y;
+
+    gl_Position.xy *= Scale.xy;
+    gl_Position.x -= 1.0;
+    gl_Position.y += 1.0;
+    
+    gl_Position += OutlineOffset * 0.002;
+    fColor = vColor;
+}   
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+precision mediump float;
+
+varying vec4 fColor;
+uniform vec4 OffsetColor;
+void
+main()
+{
+    gl_FragColor = (fColor * OffsetColor) / 255.0;
+}
+</script>
+
+<script type="text/javascript" src="../Common/webgl-utils.js"></script>
+<script type="text/javascript" src="../Common/initShaders.js"></script>
+<script type="text/javascript" src="../Common/MV.js"></script>
+<script type="text/javascript" src="hw.js"></script>
+<script type="text/javascript" src="DrawingObject.js"></script>
+<script type="text/javascript" src="object/tree.js"></script>
+<script type="text/javascript" src="object/star.js"></script>
+<script type="text/javascript" src="object/meteor.js"></script>
+<script type="text/javascript" src="object/ground.js"></script>
+<script type="text/javascript" src="object/Weed.js"></script>
+<script type="text/javascript" src="object/Animal.js"></script>
+<script type="text/javascript" src="object/Light.js"></script>
+<script type="text/javascript" src="object/Wall.js"></script>
+</head>
+
+<body>
+
+
+<canvas id="gl-canvas" width="800" height="800">
+Oops ... your browser doesn't support the HTML5 canvas element
+</canvas>
+</body>
+</html>
