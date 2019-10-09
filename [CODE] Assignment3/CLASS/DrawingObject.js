@@ -45,9 +45,9 @@ class DrawingObject {
     static GetColor(arrayPointer) {
     }
 
-	static GetVertexColor(arrayPointer) {
-		return false;
-	}
+   static GetVertexColor(arrayPointer) {
+      return false;
+   }
 
     static GetDraw() {
     }
@@ -55,29 +55,29 @@ class DrawingObject {
     static Init(ClassName) {
         // Each class first executes this function.
 
-		var v = []; // arrayPointer
-		var c = []; // arrayPointer
-		var vc = []; // arrayPointer
-		var ImplementGetVertexColor = ClassName.GetVertexColor(vc);
-		if (ImplementGetVertexColor === false) {
-			// Load the vertex of that class.
-			ClassName.GetVertex(v);
-			ClassName.GetColor(c);
-		} else {
-			for(var i = 0; i < vc.length; i += 2)
-			{
-				v.push(vc[i]);
-				c.push(vc[i + 1]);
-			}
-		}
-		
-		// Setting Vertex Range to this class(not super class)
-		ClassName.VertexStart = DrawingObject.vertices.length;
-		ClassName.ColorStart = DrawingObject.colors.length;
+      var v = []; // arrayPointer
+      var c = []; // arrayPointer
+      var vc = []; // arrayPointer
+      var ImplementGetVertexColor = ClassName.GetVertexColor(vc);
+      if (ImplementGetVertexColor === false) {
+         // Load the vertex of that class.
+         ClassName.GetVertex(v);
+         ClassName.GetColor(c);
+      } else {
+         for(var i = 0; i < vc.length; i += 2)
+         {
+            v.push(vc[i]);
+            c.push(vc[i + 1]);
+         }
+      }
+      
+      // Setting Vertex Range to this class(not super class)
+      ClassName.VertexStart = DrawingObject.vertices.length;
+      ClassName.ColorStart = DrawingObject.colors.length;
 
-		// Add vertex to super class
-		DrawingObject.vertices = DrawingObject.vertices.concat(v);
-		DrawingObject.colors = DrawingObject.colors.concat(c);
+      // Add vertex to super class
+      DrawingObject.vertices = DrawingObject.vertices.concat(v);
+      DrawingObject.colors = DrawingObject.colors.concat(c);
 
         var d = [];
         ClassName.GetDraw(d);
@@ -145,8 +145,8 @@ class DrawingObject {
         }
     }
 
-	Move(vector, mul=1) {
-		this.position = vec2(this.position[0] + vector[0] * mul, this.position[1] + vector[1] * mul);
+   Move(vector, mul=1) {
+      this.position = vec2(this.position[0] + vector[0] * mul, this.position[1] + vector[1] * mul);
     }
     
     Start() {
@@ -164,11 +164,21 @@ class DrawingObject {
 }
 function DrawingSetup() {
     // Merge Vertex=
-    DrawingObject.Init(Ground);
-	DrawingObject.Init(Wall);
+   DrawingObject.Init(Ground);
+   DrawingObject.Init(Wall);
+   DrawingObject.Init(Bush);
+   //DrawingObject.Init(Star);
+   //DrawingObject.Init(StarEffect);
 
-    DrawingObject.Instance(Ground, vec2(500, 900), vec2(1, 1));
-	DrawingObject.Instance(Wall, vec2(500, 500), vec2(1, 1));
+   DrawingObject.Instance(Ground, vec2(500, 900), vec2(1, 1));
+   DrawingObject.Instance(Wall, vec2(500, 500), vec2(1, 1));
+   DrawingObject.Instance(Bush, vec2(500, 500), vec2(1, 1));
+
+   /*for (var i = 0; i < 25; i++) {
+        var x = Math.random();
+        var y = Math.random();
+        DrawingObject.Instance(Bush, vec2(x * 1000, y * 500), vec2(0.3, 0.3));
+    }*/
     
     /*for (var i = 0; i < 20; i++) {
         var x = Math.random();
@@ -176,6 +186,12 @@ function DrawingSetup() {
         var object = DrawingObject.Instance(Tree, vec2(x * 1000, 500 + y * 300), vec2(0.15, 0.15));
         object.z = 5;
         object.outline = true;
+    }*/
+    
+	/*for (var i = 0; i < 25; i++) {
+        var x = Math.random();
+        var y = Math.random();
+        DrawingObject.Instance(Star, vec2(x * 1000, y * 500), vec2(0.03, 0.03));
     }*/
 
    
