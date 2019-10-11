@@ -166,12 +166,17 @@ function DrawingSetup() {
     // Merge Vertex=
    DrawingObject.Init(Ground);
    DrawingObject.Init(Wall);
+   DrawingObject.Init(Box);
+   DrawingObject.Init(StreetLamp);
+   
    //DrawingObject.Init(Bush);
    //DrawingObject.Init(Star);
    //DrawingObject.Init(StarEffect);
 
    DrawingObject.Instance(Ground, vec2(500, 900), vec2(1, 1));
    DrawingObject.Instance(Wall, vec2(500, 500), vec2(1, 1));
+   DrawingObject.Instance(Box, vec2(500, 500), vec2(1, 1));
+   DrawingObject.Instance(StreetLamp, vec2(500, 500), vec2(1, 1));
    //DrawingObject.Instance(Bush, vec2(500, 500), vec2(1, 1));
 
    /*for (var i = 0; i < 25; i++) {
