@@ -4,7 +4,7 @@ if(!is_chrome)
 {
 	  alert('Unsupported browser. Use Chrome');
 }  
-
+var mouse;
 var gl;
 window.onload = function init() {
     var canvas = document.getElementById("gl-canvas");
@@ -58,63 +58,42 @@ window.onload = function init() {
     this.gl.scale = gl.getUniformLocation(program, "Scale");
     this.gl.offsetcolor = gl.getUniformLocation(program, "OffsetColor");
     this.gl.rotation = gl.getUniformLocation(program, "Rotation");
-
-
-    canvas.addEventListener("mouseclick", function (event)
-    {
+    mouse = DrawingObject.Instance(Mouse, vec2(0,0), vec2(1,1));
+    function MouseEvent(event, object_event) {
         var target = event.target;
-        var x = event.x / target.width * 1000;
-        var y = event.y / target.height * 1000;
-
+        mouse.x = event.x / target.width * 1000;
+        mouse.y = event.y / target.height * 1000;
+        object_event(mouse);
         var object_size = DrawingObject.Object.length; // Do not update the object added in updating.
         for (var i = 0; i < object_size; i++) {
             var item = DrawingObject.Object[i];
+            if (item instanceof Mouse) continue;
             var x1 = item.position[0] - 500 * item.scale[0];
             var x2 = item.position[0] + 500 * item.scale[0];
             var y1 = item.position[1] - 500 * item.scale[1];
             var y2 = item.position[1] + 500 * item.scale[1];
-            if (x1 <= x && x2 >= x && y1 <= y && y2 >= y) {
-
-                DrawingObject.Object[i].onMouseClick();
-            }
-        }
-    });
-    
-    var mousebutton = false;
-    canvas.addEventListener("mousedown", function (event)
-    {
-        mousebutton = true;
-        canvas_mousepress(event);
-    });
-    canvas.addEventListener("mouseup", function (event)
-    {
-        mousebutton = false;
-    });
-    canvas.addEventListener("mousemove", function (event)
-    {
-        canvas_mousepress(event);
-    });
-
-    function canvas_mousepress(event)
-    {
-        if (mousebutton == false) return;
-        var target = event.target;
-        var x = event.x / target.width * 1000;
-        var y = event.y / target.height * 1000;
-
-        var object_size = DrawingObject.Object.length; // Do not update the object added in updating.
-        for (var i = 0; i < object_size; i++) {
-            var item = DrawingObject.Object[i];
-            var x1 = item.position[0] - 500 * item.scale[0];
-            var x2 = item.position[0] + 500 * item.scale[0];
-            var y1 = item.position[1] - 500 * item.scale[1];
-            var y2 = item.position[1] + 500 * item.scale[1];
-            if (x1 <= x && x2 >= x && y1 <= y && y2 >= y) {
-
-                DrawingObject.Object[i].onMousePress();
+            if (x1 <= mouse.x && x2 >= mouse.x && y1 <= mouse.y && y2 >= mouse.y) {
+                object_event(DrawingObject.Object[i]);
             }
         }
     }
+    canvas.addEventListener("mouseclick", function (event) {
+        MouseEvent(event, function(object){object.onMouseClick();})
+    });
+    
+    
+    canvas.addEventListener("mousedown", function (event) {
+        mouse.clicked = true;
+        MouseEvent(event, function(object) {object.onMouseClick()})
+        MouseEvent(event, function(object) {object.onMousePress()})
+    });
+    canvas.addEventListener("mouseup", function (event) {
+        mouse.clicked = false;
+    });
+    canvas.addEventListener("mousemove", function (event) {
+        if (mouse.clicked == false) return;
+        MouseEvent(event, function(object){object.onMousePress();})
+    });
     // Start animation function
     animationLoop();
 };
@@ -142,7 +121,6 @@ function animationLoop() {
     render();
 }
 
-var next_meteor = 0;
 function render() {
     // Reset screen
     gl.clear(gl.COLOR_BUFFER_BIT);
@@ -173,13 +151,5 @@ function render() {
     var object_size = DrawingObject.Object.length; // Do not update the object added in updating.
     for (var i = 0; i < object_size; i++) {
         DrawingObject.Object[i].GraphicUpdate();
-    }
-
-    // Meteor effect
-    next_meteor--;
-    if (next_meteor <= 0) {
-        next_meteor = Math.random() * 60 + 10;
-        var x = Math.random();
-        DrawingObject.Instance(Meteor, vec2(x * 1000, -10), vec2(0.03, 0.03));
     }
 }

@@ -18,22 +18,30 @@ main()
 
     gl_Position = vPosition;
 
-    // 중점을 기준으로 회전 (point - 500), 작업 후 원래대로 +500
     float s = sin( Rotation );
     float c = cos( Rotation );
-    gl_Position.x = -s * (vPosition.y - 500.0) + c * (vPosition.x - 500.0);
-    gl_Position.y =  s * (vPosition.x - 500.0) + c * (vPosition.y - 500.0);
-    gl_Position.xy += 500.0;
 
-    gl_Position.xy += (Offset.xy / Scale.xy);
-    gl_Position.xy = (gl_Position.xy - 500.0) / 500.0;
+    // 기존 오브젝트 원본 버텍스의 중점을 0,0으로 이동
+    gl_Position.xy -= 500.0;
+
+    // 사이즈 조절
+    gl_Position.xy *= Scale.xy;
+
+    // 회전
+    vec4 Temp = gl_Position;
+    gl_Position.x = -s * (Temp.y) + c * (Temp.x);
+    gl_Position.y =  s * (Temp.x) + c * (Temp.y);
+
+
+    // 0,0에서 필요한만큼 좌표 이동
+    gl_Position.xy += (Offset.xy);
+
+
+    gl_Position.xy = gl_Position.xy / 500.0;
     gl_Position.y = -gl_Position.y;
 
-    
-    gl_Position.xy *= Scale.xy;
     gl_Position.x -= 1.0;
     gl_Position.y += 1.0;
-    
     
     gl_Position += OutlineOffset * 0.002;
     fColor = vColor;
@@ -67,6 +75,8 @@ main()
 <script type="text/javascript" src="object/Wall.js"></script>
 <script type="text/javascript" src="object/Bush.js"></script>
 <script type="text/javascript" src="object/Fruit.js"></script>
+<script type="text/javascript" src="object/Line.js"></script>
+<script type="text/javascript" src="object/Mouse.js"></script>
 </head>
 
 <body>
