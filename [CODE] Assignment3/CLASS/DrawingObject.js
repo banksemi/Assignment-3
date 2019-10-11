@@ -27,7 +27,7 @@ class DrawingObject {
     static bottom = 0;
 
     // Create a new instance.
-    static Instance(classtype, position, scale = vec2(1, 1)) {
+    static Instance(classtype, position = vec2(1, 1), scale = vec2(1, 1)) {
         var instance = new classtype();
         instance.position = position;
         instance.scale = scale;
@@ -170,9 +170,10 @@ function DrawingSetup() {
    DrawingObject.Init(Wall);
    DrawingObject.Init(Bush);
    DrawingObject.Init(Fruit);
-   //DrawingObject.Init(Star);
+   DrawingObject.Init(Star);
    //DrawingObject.Init(StarEffect);
-
+   DrawingObject.Init(StarEffect);
+   DrawingObject.Init(Line);
    DrawingObject.Instance(Ground, vec2(500, 900), vec2(1, 1));
    DrawingObject.Instance(Wall, vec2(500, 500), vec2(1, 1));
    
@@ -211,11 +212,10 @@ function DrawingSetup() {
         object.outline = true;
     }*/
     
-	/*for (var i = 0; i < 25; i++) {
+	for (var i = 0; i < 30; i++) {
         var x = Math.random();
         var y = Math.random();
         DrawingObject.Instance(Star, vec2(x * 1000, y * 500), vec2(0.03, 0.03));
-    }*/
-
+    }
    
 }
