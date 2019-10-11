@@ -57,7 +57,6 @@ window.onload = function init() {
     this.gl.outlineOffset = gl.getUniformLocation(program, "OutlineOffset");
     this.gl.scale = gl.getUniformLocation(program, "Scale");
     this.gl.offsetcolor = gl.getUniformLocation(program, "OffsetColor");
-    this.gl.rotation = gl.getUniformLocation(program, "Rotation");
 
 
     canvas.addEventListener("mouseclick", function (event)

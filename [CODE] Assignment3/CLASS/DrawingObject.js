@@ -20,7 +20,6 @@ class DrawingObject {
 
     offsetcolor = vec4(1, 1, 1, 1);
     z = 0;
-    rotation = 0;
     outline = false;
     first_start = true;
 
@@ -111,7 +110,6 @@ class DrawingObject {
         gl.uniform4f(gl.scale, this.scale[0], this.scale[1], 0, 0);
         gl.uniform4fv(gl.offsetcolor, this.offsetcolor);
 
-        gl.uniform1f(gl.rotation, this.rotation * Math.PI / 180.0);
         if (this.outline == true)
         {
             // Save offsetcolor to temp.
