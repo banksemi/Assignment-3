@@ -203,14 +203,8 @@ function DrawingSetup() {
 			j = j + 25
 		}
 	}
-    
-    /*for (var i = 0; i < 20; i++) {
-        var x = Math.random();
-        var y = Math.random();
-        var object = DrawingObject.Instance(Tree, vec2(x * 1000, 500 + y * 300), vec2(0.15, 0.15));
-        object.z = 5;
-        object.outline = true;
-    }*/
+	
+	// Delete Tree loop
     
 	for (var i = 0; i < 30; i++) {
         var x = Math.random();
