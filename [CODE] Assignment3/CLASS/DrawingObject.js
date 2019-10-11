@@ -169,7 +169,7 @@ function DrawingSetup() {
    DrawingObject.Init(Ground);
    DrawingObject.Init(Wall);
    DrawingObject.Init(Bush);
-   //DrawingObject.Init(Fruit);
+   DrawingObject.Init(Fruit);
    //DrawingObject.Init(Star);
    //DrawingObject.Init(StarEffect);
 

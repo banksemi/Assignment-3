@@ -19,18 +19,22 @@ class Fruit extends DrawingObject {
         this.temp_vertices = vertices;
     }
     static GetColor(colors) {
+
+		colors.push(vec4(240, 100, 100, 255)); // Line Color
+		colors.push(vec4(240, 100, 100, 255)); // Line Color
+
 		colors.push(vec4(240, 100, 100, 255)); // center
-        for (var i = 0; i < 364; i++) {
+        for (var i = 0; i < 361; i++) {
             var a = this.temp_vertices[i][1] / 500;
             colors.push(vec4(240 * a, 40 * a, 40 * a, 255)); // center
         }
     }
     static GetDraw(drawlist) {
 		drawlist.push([gl.LINES, 0, 2])
-        drawlist.push([gl.TRIANGLE_FAN, 3, 363])
+        drawlist.push([gl.TRIANGLE_FAN, 2, 362])
     }
     
-	// 1/60ÃÊ¸¶´Ù ºÒ¸®´Â ÇÔ¼ö
+	// 1/60ï¿½Ê¸ï¿½ï¿½ï¿½ ï¿½Ò¸ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     Update() {
         var a = (1200 - this.position[0]) / 1300 * 1.0;
         this.offsetcolor = vec4(a, a, a, 1);
