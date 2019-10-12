@@ -171,16 +171,18 @@ function DrawingSetup() {
    DrawingObject.Init(Bush);
    DrawingObject.Init(Fruit);
    DrawingObject.Init(Star);
-   DrawingObject.Init(Box);
    DrawingObject.Init(StreetLamp);
-   //DrawingObject.Init(StarEffect);
+   DrawingObject.Init(LampLight);
    DrawingObject.Init(StarEffect);
    DrawingObject.Init(Line);
+   DrawingObject.Init(Box);
+   DrawingObject.Init(SmallBox);
+
    DrawingObject.Instance(Ground, vec2(500, 900), vec2(1, 1));
    DrawingObject.Instance(Wall, vec2(500, 500), vec2(1, 1));
-   DrawingObject.Instance(Box, vec2(500, 500), vec2(1, 1));
+   DrawingObject.Instance(LampLight, vec2(500, 500), vec2(1, 1));
    DrawingObject.Instance(StreetLamp, vec2(500, 500), vec2(1, 1));
-   
+
    var bush_x = 0;
 	for (var i = 0; i < 80; i++) {
 	    var j = 50;
