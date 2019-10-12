@@ -1,5 +1,5 @@
 var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
-
+var boxNum = 0;
 if(!is_chrome)
 {
 	  alert('Unsupported browser. Use Chrome');
@@ -94,6 +94,32 @@ window.onload = function init() {
         if (mouse.clicked == false) return;
         MouseEvent(event, function(object){object.onMousePress();})
     });
+
+	//boxNum ==1 => Show Big Box
+	//boxNum ==2 => Show Big+Small Box
+	//boxNum ==3 => Show Big Box
+	//boxNum ==4 => Show None Box
+	//boxNum ==5 => Show Big+Small Box
+	//boxNum ==6 => Show None Box
+	var boxButton = document.getElementById("boxButton");
+	boxButton.addEventListener("click", function() {
+		boxNum++;
+
+		if(boxNum ==1){
+			DrawingObject.Instance(Box, vec2(500, 500), vec2(1, 1));
+		}
+		else if(boxNum ==2 ){
+			DrawingObject.Instance(SmallBox, vec2(500, 500), vec2(1, 1));
+		}
+		else if(boxNum ==5){
+			DrawingObject.Instance(Box, vec2(500, 500), vec2(1, 1));
+			DrawingObject.Instance(SmallBox, vec2(500, 500), vec2(1, 1));
+		}
+		else if(boxNum ==6){
+			boxNum =0;
+		}
+	});
+
     // Start animation function
     animationLoop();
 };

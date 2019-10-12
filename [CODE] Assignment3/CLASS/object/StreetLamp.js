@@ -4,32 +4,33 @@ class StreetLamp extends DrawingObject {
     }
     static GetVertexColor(VertexColor)
    {
-      VertexColor.push(vec2(50, 0), vec4(100, 100, 100, 255));
+		VertexColor.push(vec2(50, 0), vec4(100, 100, 100, 255));
         VertexColor.push(vec2(130, 0), vec4(255, 255, 255, 255));
         VertexColor.push(vec2(50, 900), vec4(100, 100, 100, 255));
         VertexColor.push(vec2(130, 900),vec4(255, 255, 255, 255));
 
-      VertexColor.push(vec2(50, 0),vec4(100, 100, 100, 255));
-       VertexColor.push(vec2(65, 0), vec4(127, 127, 127, 255));
+		VertexColor.push(vec2(50, 0),vec4(100, 100, 100, 255));
+		VertexColor.push(vec2(65, 0), vec4(127, 127, 127, 255));
         VertexColor.push(vec2(50, 900), vec4(10,10, 10, 210));
         VertexColor.push(vec2(65, 900), vec4(127, 127, 127, 255));
 
-      VertexColor.push(vec2(130,200), vec4(255, 225, 0, 180));
-        VertexColor.push(vec2(130, 900), vec4(255, 230, 153, 120));
-        VertexColor.push(vec2(700, 900), vec4(255, 230, 153, 180));
-
-      VertexColor.push(vec2(130,200), vec4(255, 255, 255, 255));
+		VertexColor.push(vec2(130,200), vec4(255, 255, 255, 255));
         VertexColor.push(vec2(260, 200), vec4(127,127, 127, 255));
         VertexColor.push(vec2(130, 270),vec4(255, 255, 255, 255));
         VertexColor.push(vec2(260, 270),  vec4(127,127, 127, 255));
+
+		
+		VertexColor.push(vec2(130,265), vec4(255, 255, 0, 200));
+        VertexColor.push(vec2(190, 265), vec4(255, 255, 0, 200));
+        VertexColor.push(vec2(130, 275),vec4(255, 255, 0, 200));
+        VertexColor.push(vec2(190, 275), vec4(255, 255, 0, 255));
  
    }
     static GetDraw(drawlist) {
         drawlist.push([gl.TRIANGLE_STRIP, 0, 4]);
-      drawlist.push([gl.TRIANGLE_STRIP, 4, 4]);
-      drawlist.push([gl.TRIANGLES, 8, 3]);
-      drawlist.push([gl.TRIANGLE_STRIP, 11, 4]);
-    }
+	    drawlist.push([gl.TRIANGLE_STRIP, 4, 4]);
+		drawlist.push([gl.TRIANGLE_STRIP, 8, 4]);
+	    drawlist.push([gl.TRIANGLE_STRIP, 12, 4]);}
 
     // 오브젝트가 처음 나타날 경우 Update() 전에 호출되는 함수
     Start() {
