@@ -23,7 +23,8 @@ class DrawingObject {
     rotation = 0;
     outline = false;
     first_start = true;
-
+    click_area_scale = vec2(1,1);
+    disposed = false;
     static bottom = 0;
 
     // Create a new instance.
@@ -46,10 +47,21 @@ class DrawingObject {
     static GetColor(arrayPointer) {
     }
 
-   static GetVertexColor(arrayPointer) {
-      return false;
-   }
-
+    static GetVertexColor(arrayPointer) {
+        return false;
+    }
+    static DrawCycle(VertexColor, ox, oy, r, m_color, out_color, count = 362)
+    {
+		VertexColor.push(vec2(ox, oy), m_color);
+        count -= 1;
+        // From circle, move the angle 60 degrees to get the x, y. And add them to the array of vertexs.
+        for (var i = 0; i < count; i++) {
+            var agree = i * (360 / (count - 1));
+            var vx = Math.cos(agree * Math.PI / 180.0) * r + ox;
+            var vy = Math.sin(agree * Math.PI / 180.0) * r + oy;
+            VertexColor.push(vec2(vx, vy), out_color);
+        }
+    }
     static GetDraw() {
     }
 
@@ -95,6 +107,7 @@ class DrawingObject {
     }
 
     Dispose() {
+        this.disposed = true;
         DrawingObject.disposelist.push(this);
     }
 
@@ -106,6 +119,9 @@ class DrawingObject {
         // Run the Update statement for each object. (It can modify X, Y, Z, ,Scale ,etc...)
         this.Update();
 
+        // Check Mouse Over
+        if (this.CheckIncluded(mouse.x,mouse.y))
+            this.onMouseOver();
         // Setting uniform by using each object value
         gl.uniform4f(gl.offset, this.position[0], this.position[1], 0, 0);
         gl.uniform4f(gl.scale, this.scale[0], this.scale[1], 0, 0);
@@ -163,6 +179,17 @@ class DrawingObject {
 
     onMousePress() {
     }
+
+    onMouseOver() {
+    }
+    CheckIncluded(mx, my)
+    {
+        var x1 = this.position[0] - 500 * this.scale[0] * this.click_area_scale[0];
+        var x2 = this.position[0] + 500 * this.scale[0] * this.click_area_scale[0];
+        var y1 = this.position[1] - 500 * this.scale[1] * this.click_area_scale[1];
+        var y2 = this.position[1] + 500 * this.scale[1] * this.click_area_scale[1];
+        return x1 <= mx && x2 >= mx && y1 <= my && y2 >= my;
+    }
 }
 function DrawingSetup() {
     // Merge Vertex=
@@ -175,14 +202,20 @@ function DrawingSetup() {
    DrawingObject.Init(LampLight);
    DrawingObject.Init(StarEffect);
    DrawingObject.Init(Line);
+   DrawingObject.Init(Cloud);
+   DrawingObject.Init(Sky);
+   DrawingObject.Init(Light);
+   DrawingObject.Init(StarMouse);
+
    DrawingObject.Init(Box);
    DrawingObject.Init(SmallBox);
-
    DrawingObject.Instance(Ground, vec2(500, 900), vec2(1, 1));
    DrawingObject.Instance(Wall, vec2(500, 500), vec2(1, 1));
    DrawingObject.Instance(LampLight, vec2(500, 500), vec2(1, 1));
    DrawingObject.Instance(StreetLamp, vec2(500, 500), vec2(1, 1));
-
+   DrawingObject.Instance(Sky, vec2(500, 500), vec2(1, 1));
+   DrawingObject.Instance(Light, vec2(1000, 0), vec2(1, 1));
+   
    var bush_x = 0;
 	for (var i = 0; i < 80; i++) {
 	    var j = 50;
@@ -212,10 +245,4 @@ function DrawingSetup() {
 	
 	// Delete Tree loop
     
-	for (var i = 0; i < 30; i++) {
-        var x = Math.random();
-        var y = Math.random();
-        DrawingObject.Instance(Star, vec2(x * 1000, y * 500), vec2(0.03, 0.03));
-    }
-   
 }
