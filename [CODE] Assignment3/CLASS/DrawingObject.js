@@ -107,8 +107,10 @@ class DrawingObject {
     }
 
     Dispose() {
-        this.disposed = true;
-        DrawingObject.disposelist.push(this);
+        if (!this.disposed) {
+            this.disposed = true;
+            DrawingObject.disposelist.push(this);
+        }
     }
 
     GraphicUpdate() {
@@ -120,7 +122,7 @@ class DrawingObject {
         this.Update();
 
         // Check Mouse Over
-        if (this.CheckIncluded(mouse.x,mouse.y))
+        if (this.CheckIncluded(mouse.position[0],mouse.position[1]))
             this.onMouseOver();
         // Setting uniform by using each object value
         gl.uniform4f(gl.offset, this.position[0], this.position[1], 0, 0);
@@ -182,6 +184,10 @@ class DrawingObject {
 
     onMouseOver() {
     }
+
+    onMouseUp() {
+    }
+
     CheckIncluded(mx, my)
     {
         var x1 = this.position[0] - 500 * this.scale[0] * this.click_area_scale[0];

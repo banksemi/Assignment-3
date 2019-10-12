@@ -1,5 +1,6 @@
 class Star extends SkyObject {
     static last_clicked_star = null;
+    static mouse_line = null;
     rgb = 0;
     flag = 0; // it is flag to select in 'plus' and 'minus'
     mouse = null;
@@ -96,6 +97,12 @@ class Star extends SkyObject {
                 line.offsetcolor = vec4(1, 1, 1, 0.4);
             }
             this.DrawEffect();
+            if (Star.mouse_line != null) {
+                Star.mouse_line.Dispose();
+            }
+            Star.mouse_line = DrawingObject.Instance(Line);
+            Star.mouse_line.ConnectObjects(this, mouse);
+            Star.mouse_line.offsetcolor = vec4(1, 1, 1, 0.4);
         }
         Star.last_clicked_star = this;
     }

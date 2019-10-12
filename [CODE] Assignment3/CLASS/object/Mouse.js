@@ -18,6 +18,18 @@ class Mouse extends DrawingObject {
     // 해당 오브젝트를 클릭할 경우 실행되는 함수
     onMouseClick() {
         Star.last_clicked_star = null;
+        if (Star.mouse_line != null)
+        {
+            Star.mouse_line.Dispose();
+            Star.mouse_line = null;
+        }
+    }
+    onMouseUp() {
+        if (Star.mouse_line != null)
+        {
+            Star.mouse_line.Dispose();
+            Star.mouse_line = null;
+        }
     }
 
     // 해당 오브젝트를 마우스로 누르고 있을 때 실행되는 함수(여러번 실행될 수 있음)
