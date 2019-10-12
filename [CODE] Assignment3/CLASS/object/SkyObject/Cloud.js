@@ -15,6 +15,7 @@ class Cloud extends SkyObject {
         for(var i = 0; i < Cloud.CycleCount; i++)
             drawlist.push([gl.TRIANGLE_FAN, i * Cloud.CyclePoint, Cloud.CyclePoint])
     }
+
     Start() {
         super.Update();
         this.outline = true;

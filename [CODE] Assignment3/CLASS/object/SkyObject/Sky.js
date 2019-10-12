@@ -4,6 +4,7 @@ class Sky extends DrawingObject {
     Speed = 5;
     HtmlBox;
     HtmlSpeed;
+    z = -10000;
     constructor(position, scale) {
         super(position, scale); 
         Sky.instance = this;
@@ -12,11 +13,15 @@ class Sky extends DrawingObject {
     }
 	static GetVertexColor(VertexColor)
 	{
-
+        VertexColor.push(vec2(0,0),vec4(0,0,0,255));
+        VertexColor.push(vec2(1000,0),vec4(0,0,0,255));
+        VertexColor.push(vec2(1000,1000),vec4(0,0,0,0));
+        VertexColor.push(vec2(0,1000),vec4(0,0,0,0));
     }
 
     static GetDraw(drawlist) {
         
+        drawlist.push([gl.TRIANGLE_FAN, 0, 4])
     }
     Frame = 0;
 
@@ -39,12 +44,20 @@ class Sky extends DrawingObject {
     }
 
     Start() {
-        for (var i = 0 ; i < 30; i++)
-        {
-            
+        for (var i = 0 ; i < 30; i++) {
             DrawingObject.Instance(Star, vec2(Math.random() * 1000, Math.random() * 500), vec2(0.03, 0.03))
         }
     }
+
+    // 이 함수를 오버라이드하면 화면이 갱신될 때 마다 컬러값을 변경할 수 있음!! (CPU 부하 증가)
+    ColorUpdate(colors) {
+        // this.GlobalTime <- 현재 시간 (0~24) 사이 값을 가짐
+        colors.push(vec4(255 * this.GlobalTime / 24,0,0,255)); // 좌측 상단
+        colors.push(vec4(0,255,0,255)); // 우측 상단
+        colors.push(vec4(0,0,255,255)); // 우측 하단
+        colors.push(vec4(0,0,0,255)); // 좌측 하단
+    }
+
     Update() {
         this.Speed = this.HtmlSpeed.value / 10;
         this.Frame++;
