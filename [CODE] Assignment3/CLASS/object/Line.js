@@ -20,6 +20,7 @@ class Line extends DrawingObject {
     {
         this.connected_object1 = object1;
         this.connected_object2 = object2;
+        this.z = (object1.z + object2.z) / 2;
     }
     // 오브젝트가 처음 나타날 경우 Update() 전에 호출되는 함수
     Start() {
@@ -44,5 +45,8 @@ class Line extends DrawingObject {
             this.scale = vec2(0.001 * d, 0.001);
             this.position = vec2(this.connected_object1.position[0] + x / 2, this.connected_object1.position[1] + y / 2);
         }
+
+        if (this.connected_object1.disposed || this.connected_object2.disposed)
+            this.Dispose();
     }
 }

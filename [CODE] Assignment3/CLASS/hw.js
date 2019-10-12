@@ -61,19 +61,14 @@ window.onload = function init() {
     mouse = DrawingObject.Instance(Mouse, vec2(0,0), vec2(1,1));
     function MouseEvent(event, object_event) {
         var target = event.target;
-        mouse.x = event.x / target.width * 1000;
-        mouse.y = event.y / target.height * 1000;
+        mouse.position = vec2(event.offsetX / target.width * 1000, event.offsetY / target.height * 1000);
         object_event(mouse);
         var object_size = DrawingObject.Object.length; // Do not update the object added in updating.
         for (var i = 0; i < object_size; i++) {
             var item = DrawingObject.Object[i];
             if (item instanceof Mouse) continue;
-            var x1 = item.position[0] - 500 * item.scale[0];
-            var x2 = item.position[0] + 500 * item.scale[0];
-            var y1 = item.position[1] - 500 * item.scale[1];
-            var y2 = item.position[1] + 500 * item.scale[1];
-            if (x1 <= mouse.x && x2 >= mouse.x && y1 <= mouse.y && y2 >= mouse.y) {
-                object_event(DrawingObject.Object[i]);
+            if (item.CheckIncluded(mouse.position[0], mouse.position[1])) {
+                object_event(item);
             }
         }
     }
@@ -89,8 +84,13 @@ window.onload = function init() {
     });
     canvas.addEventListener("mouseup", function (event) {
         mouse.clicked = false;
+        MouseEvent(event, function(object) {object.onMouseUp()})
     });
+    
     canvas.addEventListener("mousemove", function (event) {
+        
+        var target = event.target;
+        mouse.position = vec2(event.offsetX / target.width * 1000, event.offsetY / target.height * 1000);
         if (mouse.clicked == false) return;
         MouseEvent(event, function(object){object.onMousePress();})
     });
