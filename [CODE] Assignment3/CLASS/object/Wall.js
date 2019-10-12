@@ -14,12 +14,12 @@ class Wall extends DrawingObject {
         VertexColor.push(vec2(0, 500), vec4(0, 0, 0, 255));
 
 		VertexColor.push(vec2(0, 500), vec4(200, 200, 200, 255));
-        VertexColor.push(vec2(1000, 500), vec4(180, 180, 180, 255));
-        VertexColor.push(vec2(0, 800), vec4(80, 80, 80, 255));
+        VertexColor.push(vec2(1000, 800), vec4(60, 60, 60, 255));
+        VertexColor.push(vec2(0, 800), vec4(100, 100, 100, 255));
 
-		VertexColor.push(vec2(0, 800), vec4(80, 80, 80, 255));
-        VertexColor.push(vec2(1000, 800), vec4(40, 40, 40, 255));
-        VertexColor.push(vec2(1000, 500), vec4(180, 180, 180, 255));
+		VertexColor.push(vec2(1000, 800), vec4(60, 60, 60, 255));
+        VertexColor.push(vec2(0, 500), vec4(200, 200, 200, 255));
+        VertexColor.push(vec2(1000, 500), vec4(40, 40, 40, 255));
 
 		VertexColor.push(vec2(0, 725), vec4(180, 180, 180, 80));
         VertexColor.push(vec2(1000, 725), vec4(150, 150, 150, 80));

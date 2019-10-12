@@ -1,4 +1,5 @@
 class Star extends DrawingObject {
+    static last_clicked_star = null;
     rgb = 0;
     flag = 0; // it is flag to select in 'plus' and 'minus'
     z = -10;
@@ -55,6 +56,7 @@ class Star extends DrawingObject {
     }
 
     Update() {
+        this.Move(vec2(-0.1, (this.position[0] - 500.0) / -4000));
         if (this.flag == 0)
             this.rgb -= 2;
         else
@@ -66,13 +68,24 @@ class Star extends DrawingObject {
             this.flag = 1;
         this.offsetcolor = vec4(1, 1, 1, this.rgb / 100 * 1);
     }
-
-    onMousePress() {
+    DrawEffect() {
         for(var i = 0 ; i < 15; i++){
             var p = DrawingObject.Instance(StarEffect, vec2(this.position[0], this.position[1]));
             p.z = this.z;
         }
-        this.Move(vec2(0, 50));
+    }
+    onMousePress() {
+        if (this != Star.last_clicked_star) {
+            if (Star.last_clicked_star != null) {
+                var o1 = Star.last_clicked_star;
+                var o2 = this;
+                var line = DrawingObject.Instance(Line);
+                line.ConnectObjects(o1,o2);
+                line.offsetcolor = vec4(1, 1, 1, 0.25);
+            }
+            this.DrawEffect();
+        }
+        Star.last_clicked_star = this;
     }
 }
 

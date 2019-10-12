@@ -27,7 +27,7 @@ class DrawingObject {
     static bottom = 0;
 
     // Create a new instance.
-    static Instance(classtype, position, scale = vec2(1, 1)) {
+    static Instance(classtype, position = vec2(1, 1), scale = vec2(1, 1)) {
         var instance = new classtype();
         instance.position = position;
         instance.scale = scale;
@@ -168,38 +168,52 @@ function DrawingSetup() {
     // Merge Vertex=
    DrawingObject.Init(Ground);
    DrawingObject.Init(Wall);
+   DrawingObject.Init(Bush);
+   DrawingObject.Init(Fruit);
+   DrawingObject.Init(Star);
    DrawingObject.Init(Box);
    DrawingObject.Init(StreetLamp);
-   
-   //DrawingObject.Init(Bush);
-   //DrawingObject.Init(Star);
    //DrawingObject.Init(StarEffect);
-
+   DrawingObject.Init(StarEffect);
+   DrawingObject.Init(Line);
    DrawingObject.Instance(Ground, vec2(500, 900), vec2(1, 1));
    DrawingObject.Instance(Wall, vec2(500, 500), vec2(1, 1));
    DrawingObject.Instance(Box, vec2(500, 500), vec2(1, 1));
    DrawingObject.Instance(StreetLamp, vec2(500, 500), vec2(1, 1));
-   //DrawingObject.Instance(Bush, vec2(500, 500), vec2(1, 1));
+   
+   var bush_x = 0;
+	for (var i = 0; i < 80; i++) {
+	    var j = 50;
+		bush_x = bush_x + j;
+        var y = Math.random();
+        DrawingObject.Instance(Bush, vec2(bush_x, y * 140 + 395), vec2(0.9, 0.9));
+		if (bush_x >= 1000)
+		{
+			bush_x = -50;
+			j = j + 25
+		}
+	}
 
-   /*for (var i = 0; i < 25; i++) {
-        var x = Math.random();
+	var fruit_x = 0
+	for (var i = 0; i < 25; i++) {
+        //var x = Math.random();
+		var j = 50;
+		fruit_x = fruit_x + j;
         var y = Math.random();
-        DrawingObject.Instance(Bush, vec2(x * 1000, y * 500), vec2(0.3, 0.3));
-    }*/
+        DrawingObject.Instance(Fruit, vec2(fruit_x, y * 140 + 395), vec2(0.1, 0.1));
+		if (fruit_x >= 1000)
+		{
+			fruit_x = -50;
+			j = j + 25
+		}
+	}
+	
+	// Delete Tree loop
     
-    /*for (var i = 0; i < 20; i++) {
-        var x = Math.random();
-        var y = Math.random();
-        var object = DrawingObject.Instance(Tree, vec2(x * 1000, 500 + y * 300), vec2(0.15, 0.15));
-        object.z = 5;
-        object.outline = true;
-    }*/
-    
-	/*for (var i = 0; i < 25; i++) {
+	for (var i = 0; i < 30; i++) {
         var x = Math.random();
         var y = Math.random();
         DrawingObject.Instance(Star, vec2(x * 1000, y * 500), vec2(0.03, 0.03));
-    }*/
-
+    }
    
 }
