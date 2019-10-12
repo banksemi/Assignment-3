@@ -36,17 +36,25 @@ class Sky extends DrawingObject {
             }
         }
     }
+
+    Start() {
+        for (var i = 0 ; i < 30; i++)
+        {
+            
+            DrawingObject.Instance(Star, vec2(Math.random() * 1000, Math.random() * 500), vec2(0.03, 0.03))
+        }
+    }
     Update() {
-        this.Speed = this.HtmlSpeed.value;
+        this.Speed = this.HtmlSpeed.value / 10;
         this.Frame++;
         this.HtmlBox.value = this.GlobalTime.toFixed(2) + " H";
         this.GlobalTime += 0.01 * this.Speed;
         if (this.GlobalTime >= 24) this.GlobalTime -= 24;
 
-        this.CreateObject(18,3,15,function(){
+        this.CreateObject(18,3,15,function() {
             DrawingObject.Instance(Star, vec2(1000, Math.random() * 500), vec2(0.03, 0.03))
         });
-        this.CreateObject(6,16,100,function(){
+        this.CreateObject(6,16,100,function() {
             DrawingObject.Instance(Cloud, vec2(1100, Math.random() * 200 + 130), vec2(0.1 + Math.random() * 0.12, 0.1)).MoveY = false;
         });
     }

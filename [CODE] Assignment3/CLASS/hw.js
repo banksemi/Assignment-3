@@ -68,12 +68,8 @@ window.onload = function init() {
         for (var i = 0; i < object_size; i++) {
             var item = DrawingObject.Object[i];
             if (item instanceof Mouse) continue;
-            var x1 = item.position[0] - 500 * item.scale[0] * item.click_area_scale[0];
-            var x2 = item.position[0] + 500 * item.scale[0] * item.click_area_scale[0];
-            var y1 = item.position[1] - 500 * item.scale[1] * item.click_area_scale[1];
-            var y2 = item.position[1] + 500 * item.scale[1] * item.click_area_scale[1];
-            if (x1 <= mouse.x && x2 >= mouse.x && y1 <= mouse.y && y2 >= mouse.y) {
-                object_event(DrawingObject.Object[i]);
+            if (item.CheckIncluded(mouse.x, mouse.y)) {
+                object_event(item);
             }
         }
     }
@@ -90,7 +86,12 @@ window.onload = function init() {
     canvas.addEventListener("mouseup", function (event) {
         mouse.clicked = false;
     });
+    
     canvas.addEventListener("mousemove", function (event) {
+        
+        var target = event.target;
+        mouse.x = event.offsetX / target.width * 1000;
+        mouse.y = event.offsetY / target.height * 1000;
         if (mouse.clicked == false) return;
         MouseEvent(event, function(object){object.onMousePress();})
     });

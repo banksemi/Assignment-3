@@ -3,6 +3,7 @@ class Star extends SkyObject {
     rgb = 0;
     flag = 0; // it is flag to select in 'plus' and 'minus'
     z = -10;
+    mouse = null;
     static GetVertex(vertices) {
         // The center of the hexagon.
         vertices.push(vec2(500, 500));
@@ -54,6 +55,7 @@ class Star extends SkyObject {
         this.rgb = Math.random() * 100;
         if (Math.random() > 0.5)
             this.flag = 1;
+        this.click_area_scale = vec2(1.5, 1.5);
     }
 
     Update() {
@@ -69,11 +71,21 @@ class Star extends SkyObject {
             this.flag = 1;
         this.offsetcolor = vec4(1, 1, 1, this.rgb / 100 * 1);
     }
+
     DrawEffect() {
         for(var i = 0 ; i < 15; i++){
             var p = DrawingObject.Instance(StarEffect, vec2(this.position[0], this.position[1]));
             p.z = this.z;
         }
+    }
+
+    onMouseOver() {
+        if (this.mouse == null || (this.mouse != null && this.mouse.disposed))
+        {
+            this.mouse = DrawingObject.Instance(StarMouse,vec2(0,0));
+            this.mouse.scale = vec2(0.05, 0.05);
+        }
+        this.mouse.PositionUpdate(this);
     }
     onMousePress() {
         if (this != Star.last_clicked_star) {
@@ -82,7 +94,7 @@ class Star extends SkyObject {
                 var o2 = this;
                 var line = DrawingObject.Instance(Line);
                 line.ConnectObjects(o1,o2);
-                line.offsetcolor = vec4(1, 1, 1, 0.25);
+                line.offsetcolor = vec4(1, 1, 1, 0.4);
             }
             this.DrawEffect();
         }
@@ -91,6 +103,7 @@ class Star extends SkyObject {
 }
 
 class StarEffect extends DrawingObject {
+    static instance = null;
     time = 0;
     static GetVertex(vertices) {
         // The center of the hexagon.
@@ -125,5 +138,30 @@ class StarEffect extends DrawingObject {
         this.offsetcolor = vec4(1, 1, 1, a * 0.1);
         if (this.time == 100)
             this.Dispose();
+    }
+}
+class StarMouse extends DrawingObject {
+    timeout = 0;
+    connected_object = null;
+	static GetVertexColor(VertexColor)
+	{
+        Cloud.DrawCycle(VertexColor, 500, 500, 500,  vec4(1,1,1,100), vec4(1,1,1,60), 362);
+    }
+    static GetDraw(drawlist) {
+        drawlist.push([gl.TRIANGLE_FAN, 0, 362])
+    }
+    Start() {
+    }
+    PositionUpdate(object) {
+        this.connected_object = object;
+        this.timeout = 13;
+    }
+    Update() { 
+        this.position = this.connected_object.position;
+        this.offsetcolor = vec4(1,1,1,this.timeout / 13);
+        this.timeout--;
+        if (this.timeout == 0) {
+            this.Dispose();
+        }
     }
 }
