@@ -67,7 +67,11 @@ main()
     gl_FragColor = (fColor * OffsetColor) / 255.0;
 }
 </script>
-
+<style>
+    canvas {
+        border: 1px solid rgb(145, 145, 145);
+    }
+    </style>
 <script type="text/javascript" src="../Common/webgl-utils.js"></script>
 <script type="text/javascript" src="../Common/InitShaders.js"></script>
 <script type="text/javascript" src="../Common/MV.js"></script>
@@ -106,6 +110,7 @@ Oops ... your browser doesn't support the HTML5 canvas element
 
 <button id = "boxButton" ><h3>Box Button<br>Click the button a total of six times</h3></button>
 <input id="clock" />
+<input id="debug" />
 <input type="range" id="clock_speed" value="3" min="0" max="50">
 </body>
 </html>

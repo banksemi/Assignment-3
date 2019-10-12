@@ -6,7 +6,9 @@ if(!is_chrome)
 }  
 var mouse;
 var gl;
+var debug;
 window.onload = function init() {
+    debug = this.document.getElementById("debug");
     var canvas = document.getElementById("gl-canvas");
 
     gl = WebGLUtils.setupWebGL(canvas);
@@ -168,6 +170,7 @@ function render() {
 
     // Draw each object.
     var object_size = DrawingObject.Object.length; // Do not update the object added in updating.
+    debug.value = "Count of Object: " + object_size;
     for (var i = 0; i < object_size; i++) {
         DrawingObject.Object[i].GraphicUpdate();
     }
