@@ -10,6 +10,7 @@ class Sky extends DrawingObject {
         Sky.instance = this;
         this.HtmlBox = document.getElementById("clock");
         this.HtmlSpeed = document.getElementById("clock_speed");
+        this.background = true;
     }
 	static GetVertexColor(VertexColor)
 	{
@@ -44,7 +45,8 @@ class Sky extends DrawingObject {
     }
 
     Start() {
-        for (var i = 0 ; i < 30; i++) {
+        for (var i = 0 ; i < 30; i++)
+        {
             DrawingObject.Instance(Star, vec2(Math.random() * 1000, Math.random() * 500), vec2(0.03, 0.03))
         }
     }
@@ -52,17 +54,78 @@ class Sky extends DrawingObject {
     // 이 함수를 오버라이드하면 화면이 갱신될 때 마다 컬러값을 변경할 수 있음!! (CPU 부하 증가)
     ColorUpdate(colors) {
         // this.GlobalTime <- 현재 시간 (0~24) 사이 값을 가짐
-        colors.push(vec4(255 * this.GlobalTime / 24,0,0,255)); // 좌측 상단
-        colors.push(vec4(0,255,0,255)); // 우측 상단
-        colors.push(vec4(0,0,255,255)); // 우측 하단
-        colors.push(vec4(0,0,0,255)); // 좌측 하단
+        console.log(this.GlobalTime);
+        var alpha;
+        var originalColors = [vec4(8,12,21,255),vec4(8,12,21,255),vec4(100,83,138,255),vec4(100,83,138,255)];
+        var newColors = [vec4(66,64,114,255),vec4(66,64,114,255),vec4(100,83,138,255),vec4(100,83,138,255)];
+        if(this.GlobalTime>=21||this.GlobalTime<3)
+        {if(this.GlobalTime>=21)
+            alpha=((24-this.GlobalTime)/3);
+        else if(this.GlobalTime<3)
+            alpha=(this.GlobalTime/3);
+        
+        for(var i = 0 ; i < 4; i++){
+                
+                console.log(originalColors[i], newColors[i], alpha );
+                colors.push(mix(originalColors[i], newColors[i], alpha ));
+                
+            }
+        }
+        
+        else if((this.GlobalTime>=3&&this.GlobalTime<6)||(this.GlobalTime>=18&&this.GlobalTime<21))
+        {   originalColors = [vec4(66,64,114,255),vec4(66,64,114,255),vec4(100,83,138,255),vec4(100,83,138,255)];
+            newColors = [vec4(115,76,103,255),vec4(115,76,103,255),vec4(49,114,198,255),vec4(49,114,198,255)];
+            
+            if(this.GlobalTime<6)
+                alpha=((this.GlobalTime-3)/3);
+            else if(this.GlobalTime>6)
+                alpha=((21-this.GlobalTime)/3);
+            
+            for(var i = 0 ; i < 4; i++){
+                
+                console.log(originalColors[i]," ", newColors[i]," ", alpha );
+                colors.push(mix(originalColors[i], newColors[i], alpha ));
+                
+            }
+        }
+       
+
+        
+ 
+        else if((this.GlobalTime>=6&&this.GlobalTime<9)||(this.GlobalTime>=15&&this.GlobalTime<18)){
+            
+
+            originalColors = [vec4(115,76,103,255),vec4(115,76,103,255),vec4(49,114,198,255),vec4(49,114,198,255)];
+            newColors = [vec4(49,114,198,255),vec4(49,114,198,255),vec4(49,114,198,255),vec4(49,114,198,255)];
+            
+            if(this.GlobalTime<9)
+                alpha=((this.GlobalTime-6)/3);
+            else if(this.GlobalTime>9)
+                alpha=((18-this.GlobalTime)/3);
+            
+            for(var i = 0 ; i < 4; i++){
+                
+                console.log(originalColors[i]," ", newColors[i]," ", alpha );
+                colors.push(mix(originalColors[i], newColors[i], alpha ));
+                
+            }
+        }
+        else if(this.GlobalTime>=9&&this.GlobalTime<15){
+            colors.push(vec4(49,114,198,255)); // 좌측 상단
+            colors.push(vec4(49,114,198,255)); // 우측 상단
+            colors.push(vec4(49,114,198,255)); // 우측 하단
+            colors.push(vec4(49,114,198,255)); // 좌측 하단
+        }
     }
 
+    
+
     Update() {
+
         this.Speed = this.HtmlSpeed.value / 10;
         this.Frame++;
         this.HtmlBox.value = this.GlobalTime.toFixed(2) + " H";
-        this.GlobalTime += 0.01 * this.Speed;
+        this.GlobalTime += 0.01 * (this.Speed+1);
         if (this.GlobalTime >= 24) this.GlobalTime -= 24;
 
         this.CreateObject(18,3,15,function() {
