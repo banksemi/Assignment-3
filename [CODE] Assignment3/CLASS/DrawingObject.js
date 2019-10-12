@@ -23,7 +23,7 @@ class DrawingObject {
     rotation = 0;
     outline = false;
     first_start = true;
-
+    click_area_scale = vec2(1,1);
     static bottom = 0;
 
     // Create a new instance.

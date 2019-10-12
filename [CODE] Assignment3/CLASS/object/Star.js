@@ -117,9 +117,10 @@ class StarEffect extends DrawingObject {
     }
     Update() {
         this.Move(this.speed);
+        this.speed = vec2(this.speed[0] * 0.95, this.speed[1] * 0.95);
         this.time += 2;
         var a = (100 - this.time) / 100;
-        this.scale = vec2(a * 0.013 + 0.004, a * 0.013 + 0.004);
+        this.scale = vec2(a * 0.014 + 0.004, a * 0.014 + 0.004);
         this.offsetcolor = vec4(1, 1, 1, a * 0.1);
         if (this.time == 100)
             this.Dispose();

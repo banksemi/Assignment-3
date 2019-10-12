@@ -20,6 +20,7 @@ class Line extends DrawingObject {
     {
         this.connected_object1 = object1;
         this.connected_object2 = object2;
+        this.z = (object1.z + object2.z) / 2;
     }
     // 오브젝트가 처음 나타날 경우 Update() 전에 호출되는 함수
     Start() {
