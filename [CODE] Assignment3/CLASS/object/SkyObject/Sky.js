@@ -58,32 +58,40 @@ class Sky extends DrawingObject {
         var alpha;
         var originalColors = [vec4(8,12,21,255),vec4(8,12,21,255),vec4(100,83,138,255),vec4(100,83,138,255)];
         var newColors = [vec4(66,64,114,255),vec4(66,64,114,255),vec4(100,83,138,255),vec4(100,83,138,255)];
-        if(this.GlobalTime>=21||this.GlobalTime<3)
-        {if(this.GlobalTime>=21)
-            alpha=((24-this.GlobalTime)/3);
-        else if(this.GlobalTime<3)
-            alpha=(this.GlobalTime/3);
+       
+        if(this.GlobalTime<3)
+        {
+            for(var i = 0 ; i < 4; i++){
+                
+                colors.push(originalColors[i]);
+                
+            }
+        }
+        else if(this.GlobalTime>=21||(this.GlobalTime>=3&&this.GlobalTime<6))
+        {
+            if(this.GlobalTime>=21)
+                alpha=((24-this.GlobalTime)/3);
+            else if(this.GlobalTime<6)
+                alpha=((this.GlobalTime-3)/3);
         
         for(var i = 0 ; i < 4; i++){
                 
-                console.log(originalColors[i], newColors[i], alpha );
                 colors.push(mix(originalColors[i], newColors[i], alpha ));
                 
             }
         }
         
-        else if((this.GlobalTime>=3&&this.GlobalTime<6)||(this.GlobalTime>=18&&this.GlobalTime<21))
+        else if((this.GlobalTime>=6&&this.GlobalTime<9)||(this.GlobalTime>=18&&this.GlobalTime<21))
         {   originalColors = [vec4(66,64,114,255),vec4(66,64,114,255),vec4(100,83,138,255),vec4(100,83,138,255)];
             newColors = [vec4(115,76,103,255),vec4(115,76,103,255),vec4(49,114,198,255),vec4(49,114,198,255)];
             
-            if(this.GlobalTime<6)
-                alpha=((this.GlobalTime-3)/3);
-            else if(this.GlobalTime>6)
+            if(this.GlobalTime<9)
+                alpha=((this.GlobalTime-6)/3);
+            else if(this.GlobalTime>9)
                 alpha=((21-this.GlobalTime)/3);
             
             for(var i = 0 ; i < 4; i++){
-                
-                console.log(originalColors[i]," ", newColors[i]," ", alpha );
+            
                 colors.push(mix(originalColors[i], newColors[i], alpha ));
                 
             }
@@ -92,25 +100,24 @@ class Sky extends DrawingObject {
 
         
  
-        else if((this.GlobalTime>=6&&this.GlobalTime<9)||(this.GlobalTime>=15&&this.GlobalTime<18)){
+        else if((this.GlobalTime>=9&&this.GlobalTime<12)||(this.GlobalTime>=15&&this.GlobalTime<18)){
             
 
             originalColors = [vec4(115,76,103,255),vec4(115,76,103,255),vec4(49,114,198,255),vec4(49,114,198,255)];
             newColors = [vec4(49,114,198,255),vec4(49,114,198,255),vec4(49,114,198,255),vec4(49,114,198,255)];
             
-            if(this.GlobalTime<9)
-                alpha=((this.GlobalTime-6)/3);
-            else if(this.GlobalTime>9)
+            if(this.GlobalTime<12)
+                alpha=((this.GlobalTime-9)/3);
+            else if(this.GlobalTime>12)
                 alpha=((18-this.GlobalTime)/3);
             
             for(var i = 0 ; i < 4; i++){
                 
-                console.log(originalColors[i]," ", newColors[i]," ", alpha );
                 colors.push(mix(originalColors[i], newColors[i], alpha ));
                 
             }
         }
-        else if(this.GlobalTime>=9&&this.GlobalTime<15){
+        else if(this.GlobalTime>=12&&this.GlobalTime<15){
             colors.push(vec4(49,114,198,255)); // 좌측 상단
             colors.push(vec4(49,114,198,255)); // 우측 상단
             colors.push(vec4(49,114,198,255)); // 우측 하단
@@ -125,7 +132,7 @@ class Sky extends DrawingObject {
         this.Speed = this.HtmlSpeed.value / 10;
         this.Frame++;
         this.HtmlBox.value = this.GlobalTime.toFixed(2) + " H";
-        this.GlobalTime += 0.01 * (this.Speed+1);
+        this.GlobalTime += 0.01 * this.Speed;
         if (this.GlobalTime >= 24) this.GlobalTime -= 24;
 
         this.CreateObject(18,3,15,function() {
