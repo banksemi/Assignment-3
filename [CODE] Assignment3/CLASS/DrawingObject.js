@@ -176,10 +176,15 @@ function DrawingSetup() {
    //DrawingObject.Init(StarEffect);
    DrawingObject.Init(StarEffect);
    DrawingObject.Init(Line);
+   DrawingObject.Init(Cloud);
+   DrawingObject.Init(Sky);
+   DrawingObject.Init(Light);
    DrawingObject.Instance(Ground, vec2(500, 900), vec2(1, 1));
    DrawingObject.Instance(Wall, vec2(500, 500), vec2(1, 1));
    DrawingObject.Instance(Box, vec2(500, 500), vec2(1, 1));
    DrawingObject.Instance(StreetLamp, vec2(500, 500), vec2(1, 1));
+   DrawingObject.Instance(Sky, vec2(500, 500), vec2(1, 1));
+   DrawingObject.Instance(Light, vec2(1000, 0), vec2(1, 1));
    
    var bush_x = 0;
 	for (var i = 0; i < 80; i++) {
@@ -210,10 +215,4 @@ function DrawingSetup() {
 	
 	// Delete Tree loop
     
-	for (var i = 0; i < 30; i++) {
-        var x = Math.random();
-        var y = Math.random();
-        DrawingObject.Instance(Star, vec2(x * 1000, y * 500), vec2(0.03, 0.03));
-    }
-   
 }

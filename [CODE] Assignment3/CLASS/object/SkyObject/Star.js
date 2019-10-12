@@ -1,4 +1,4 @@
-class Star extends DrawingObject {
+class Star extends SkyObject {
     static last_clicked_star = null;
     rgb = 0;
     flag = 0; // it is flag to select in 'plus' and 'minus'
@@ -50,13 +50,14 @@ class Star extends DrawingObject {
     }
 
     Start() {
+        super.Start();
         this.rgb = Math.random() * 100;
         if (Math.random() > 0.5)
             this.flag = 1;
     }
 
     Update() {
-        this.Move(vec2(-0.1, (this.position[0] - 500.0) / -4000));
+        super.Update();
         if (this.flag == 0)
             this.rgb -= 2;
         else

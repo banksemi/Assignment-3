@@ -65,8 +65,14 @@ main()
 <script type="text/javascript" src="../Common/MV.js"></script>
 <script type="text/javascript" src="hw.js"></script>
 <script type="text/javascript" src="DrawingObject.js"></script>
+
+<script type="text/javascript" src="object/SkyObject/SkyObject.js"></script>
+<script type="text/javascript" src="object/SkyObject/Star.js"></script>
+<script type="text/javascript" src="object/SkyObject/Cloud.js"></script>
+
+<script type="text/javascript" src="object/SkyObject/Sky.js"></script>
+
 <script type="text/javascript" src="object/tree.js"></script>
-<script type="text/javascript" src="object/star.js"></script>
 <script type="text/javascript" src="object/meteor.js"></script>
 <script type="text/javascript" src="object/ground.js"></script>
 <script type="text/javascript" src="object/Weed.js"></script>
@@ -87,5 +93,7 @@ main()
 <canvas id="gl-canvas" width="800" height="800">
 Oops ... your browser doesn't support the HTML5 canvas element
 </canvas>
+<input id="clock" />
+<input type="range" id="clock_speed" value="1" min="0" max="5">
 </body>
 </html>
