@@ -111,26 +111,13 @@ class Star extends SkyObject {
 class StarEffect extends DrawingObject {
     static instance = null;
     time = 0;
-    static GetVertex(vertices) {
-        // The center of the hexagon.
-        vertices.push(vec2(500, 500));
-
-        // From circle, move the angle 60 degrees to get the x, y. And add them to the array of vertexs.
-        for (var i = 0; i < 360; i++) {
-            var agree = i;
-            var x = Math.cos(agree * Math.PI / 180.0) * 300 + 500;
-            var y = Math.sin(agree * Math.PI / 180.0) * 300 + 500;
-            vertices.push(vec2(x, y));
-        }
-    }
-    static GetColor(colors) {
-        for (var i = 0; i < 361; i++)
-            colors.push(vec4(255, 255, 255, 255)); // center
+    static GetVertexColor(VertexColor)
+	{
+        DrawingObject.DrawCycle(VertexColor, 500, 500, 300,  vec4(255, 255, 255, 255), vec4(255, 255, 255, 255), 20);
     }
     static GetDraw(drawlist) {
-        drawlist.push([gl.TRIANGLE_FAN, 0, 362])
+        drawlist.push([gl.TRIANGLE_FAN, 0, 20])
     }
-
     Start() {
         this.speed = vec2(Math.random() * 1 - 0.5, Math.random() * 1 - 0.5);
         this.Move(this.speed, 10);
@@ -140,7 +127,7 @@ class StarEffect extends DrawingObject {
         this.speed = vec2(this.speed[0] * 0.95, this.speed[1] * 0.95);
         this.time += 2;
         var a = (100 - this.time) / 100;
-        this.scale = vec2(a * 0.014 + 0.004, a * 0.014 + 0.004);
+        this.scale = vec2(a * 0.014 + 0.006, a * 0.014 + 0.006);
         this.offsetcolor = vec4(1, 1, 1, a * 0.1);
         if (this.time == 100)
             this.Dispose();
@@ -151,7 +138,7 @@ class StarMouse extends DrawingObject {
     connected_object = null;
 	static GetVertexColor(VertexColor)
 	{
-        Cloud.DrawCycle(VertexColor, 500, 500, 500,  vec4(1,1,1,100), vec4(1,1,1,60), 362);
+        DrawingObject.DrawCycle(VertexColor, 500, 500, 500,  vec4(1,1,1,100), vec4(1,1,1,60), 362);
     }
     static GetDraw(drawlist) {
         drawlist.push([gl.TRIANGLE_FAN, 0, 362])

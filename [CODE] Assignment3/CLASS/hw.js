@@ -6,7 +6,9 @@ if(!is_chrome)
 }  
 var mouse;
 var gl;
+var debug;
 window.onload = function init() {
+    debug = this.document.getElementById("debug");
     var canvas = document.getElementById("gl-canvas");
 
     gl = WebGLUtils.setupWebGL(canvas);
@@ -28,29 +30,21 @@ window.onload = function init() {
     var program = initShaders(gl, "vertex-shader", "fragment-shader");
     gl.useProgram(program);
 
-    // Load the data into the GPU
-    var bufferId = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, bufferId);
-    gl.bufferData(gl.ARRAY_BUFFER, flatten(DrawingObject.vertices), gl.STATIC_DRAW);
+    this.gl.changeBuffer = function (name, array, elementsize) {
+        // Load the data into the GPU
+        var bufferId = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, bufferId);
+        gl.bufferData(gl.ARRAY_BUFFER, flatten(array), gl.STATIC_DRAW);
 
-    console.log(DrawingObject.vertices);
-    // Associate out shader variables with our data buffer
+        // Associate out shader variables with our data buffer
 
-    var vPosition = gl.getAttribLocation(program, "vPosition");
-    gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(vPosition);
+        var attribute = gl.getAttribLocation(program, name);
+        gl.vertexAttribPointer(attribute, elementsize, gl.FLOAT, false, 0, 0);
+        gl.enableVertexAttribArray(attribute);
+    }
 
-    // // Load the data into the GPU
-
-    var bufferId = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, bufferId);
-    gl.bufferData(gl.ARRAY_BUFFER, flatten(DrawingObject.colors), gl.STATIC_DRAW);
-
-    // Associate out shader variables with our data buffer
-
-    var vColor = gl.getAttribLocation(program, "vColor");
-    gl.vertexAttribPointer(vColor, 4, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(vColor);
+    this.gl.changeBuffer("vPosition", DrawingObject.vertices, 2);
+    this.gl.changeBuffer("vColor", DrawingObject.colors, 4);
 
     // Setting Uniform Variable
     this.gl.offset = gl.getUniformLocation(program, "Offset");
@@ -58,6 +52,7 @@ window.onload = function init() {
     this.gl.scale = gl.getUniformLocation(program, "Scale");
     this.gl.offsetcolor = gl.getUniformLocation(program, "OffsetColor");
     this.gl.rotation = gl.getUniformLocation(program, "Rotation");
+    this.gl.useCustomColor = gl.getUniformLocation(program, "useCustomColor");
     mouse = DrawingObject.Instance(Mouse, vec2(0,0), vec2(1,1));
     function MouseEvent(event, object_event) {
         var target = event.target;
@@ -175,6 +170,7 @@ function render() {
 
     // Draw each object.
     var object_size = DrawingObject.Object.length; // Do not update the object added in updating.
+    debug.value = "Count of Object: " + object_size;
     for (var i = 0; i < object_size; i++) {
         DrawingObject.Object[i].GraphicUpdate();
     }

@@ -112,7 +112,10 @@ class DrawingObject {
             DrawingObject.disposelist.push(this);
         }
     }
-
+    ColorUpdate(colors) {
+        // 구현 안되면 무조건 false 반환
+        return false;
+    }
     GraphicUpdate() {
         if (this.first_start) {
             this.first_start = false;
@@ -130,6 +133,21 @@ class DrawingObject {
         gl.uniform4fv(gl.offsetcolor, this.offsetcolor);
 
         gl.uniform1f(gl.rotation, this.rotation * Math.PI / 180.0);
+
+        var color_list = [];
+        var color_list_ok = this.ColorUpdate(color_list);
+        if (color_list_ok !== false) {
+            var new_color = [];
+            for(var i = 0; i < this.prototype.VertexStart; i++) {
+                new_color.push(vec4(0,0,0,0));
+            }
+            new_color = new_color.concat(color_list);
+            gl.changeBuffer("vCustomColor", new_color, 4);
+            gl.uniform1f(gl.useCustomColor, 1);
+        }
+        else
+            gl.uniform1f(gl.useCustomColor, 0);
+
         if (this.outline == true)
         {
             // Save offsetcolor to temp.
@@ -188,8 +206,7 @@ class DrawingObject {
     onMouseUp() {
     }
 
-    CheckIncluded(mx, my)
-    {
+    CheckIncluded(mx, my) {
         var x1 = this.position[0] - 500 * this.scale[0] * this.click_area_scale[0];
         var x2 = this.position[0] + 500 * this.scale[0] * this.click_area_scale[0];
         var y1 = this.position[1] - 500 * this.scale[1] * this.click_area_scale[1];
@@ -198,30 +215,29 @@ class DrawingObject {
     }
 }
 function DrawingSetup() {
-    // Merge Vertex=
-   DrawingObject.Init(Ground);
-   DrawingObject.Init(Wall);
-   DrawingObject.Init(Bush);
-   DrawingObject.Init(Fruit);
-   DrawingObject.Init(Star);
-   DrawingObject.Init(StreetLamp);
-   DrawingObject.Init(LampLight);
-   DrawingObject.Init(StarEffect);
-   DrawingObject.Init(Line);
-   DrawingObject.Init(Cloud);
-   DrawingObject.Init(Sky);
-   DrawingObject.Init(Light);
-   DrawingObject.Init(StarMouse);
+    // Merge Vertex
+    DrawingObject.Init(Sky); // Sky를 가장 위에 두는게 CPU 부하 작음 (ColorUpdate 함수 호출시)
+    DrawingObject.Init(Ground);
+    DrawingObject.Init(Wall);
+    DrawingObject.Init(Bush);
+    DrawingObject.Init(Fruit);
+    DrawingObject.Init(Star);
+    DrawingObject.Init(StreetLamp);
+    DrawingObject.Init(LampLight);
+    DrawingObject.Init(StarEffect);
+    DrawingObject.Init(Line);
+    DrawingObject.Init(Cloud);
+    DrawingObject.Init(Light);
+    DrawingObject.Init(StarMouse);
 
-   DrawingObject.Init(Box);
-   DrawingObject.Init(SmallBox);
-   DrawingObject.Instance(Ground, vec2(500, 900), vec2(1, 1));
-   DrawingObject.Instance(Wall, vec2(500, 500), vec2(1, 1));
-   DrawingObject.Instance(LampLight, vec2(500, 500), vec2(1, 1));
-   DrawingObject.Instance(StreetLamp, vec2(500, 500), vec2(1, 1));
-   DrawingObject.Instance(Sky, vec2(500, 500), vec2(1, 1));
-   DrawingObject.Instance(Light, vec2(1000, 0), vec2(1, 1));
-   
+    DrawingObject.Init(Box);
+    DrawingObject.Init(SmallBox);
+    DrawingObject.Instance(Ground, vec2(500, 900), vec2(1, 1));
+    DrawingObject.Instance(Wall, vec2(500, 500), vec2(1, 1));
+    DrawingObject.Instance(LampLight, vec2(500, 500), vec2(1, 1));
+    DrawingObject.Instance(StreetLamp, vec2(500, 500), vec2(1, 1));
+    DrawingObject.Instance(Sky, vec2(500, 500), vec2(1, 1));
+    DrawingObject.Instance(Light, vec2(1000, 0), vec2(1, 1));
    var bush_x = 0;
 	for (var i = 0; i < 80; i++) {
 	    var j = 50;

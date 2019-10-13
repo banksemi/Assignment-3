@@ -26,7 +26,7 @@ class SkyObject extends DrawingObject {
         else
             this.Move(vec2(-1.7 * Sky.instance.Speed * this.Speed, 0));
 
-        if (this.position[0] < -100)
+        if (this.position[0] < -150 || this.position[0] > 1150)
             this.Dispose();
     }
 }

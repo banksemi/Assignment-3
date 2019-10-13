@@ -27,13 +27,13 @@ class Light extends DrawingObject {
         }
     }
     static GetColor(colors) {
-        colors.push(vec4(255, 255, 255, 35)); // center
+        colors.push(vec4(255, 255, 255, 30)); // center
 
         for (var i = 0; i < 361; i++) {
             colors.push(vec4(255, 255, 255, 0));
         }
 
-        colors.push(vec4(255, 111, 0, 50)); // center
+        colors.push(vec4(255, 111, 0, 20)); // center
 
         for (var i = 0; i < 361; i++) {
             colors.push(vec4(255, 111, 0, 0));
