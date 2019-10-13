@@ -103,15 +103,18 @@ class Sky extends DrawingObject {
     Update() {
         this.Speed = this.HtmlSpeed.value / 10;
         this.Frame++;
-        this.HtmlBox.value = this.GlobalTime.toFixed(2) + " H";
+        this.HtmlBox.value = "Time : " + this.GlobalTime.toFixed(2) + " H";
         this.GlobalTime += 0.01 * this.Speed;
         if (this.GlobalTime >= 24) this.GlobalTime -= 24;
+        if (this.GlobalTime < 0) this.GlobalTime += 24;
 
+        var new_x = 1100;
+        if (this.Speed < 0) new_x = -100;
         this.CreateObject(18, 3, 15, function () {
-            DrawingObject.Instance(Star, vec2(1000, Math.random() * 500), vec2(0.03, 0.03))
+            DrawingObject.Instance(Star, vec2(new_x, Math.random() * 500), vec2(0.03, 0.03))
         });
         this.CreateObject(6, 16, 100, function () {
-            DrawingObject.Instance(Cloud, vec2(1100, Math.random() * 200 + 130), vec2(0.1 + Math.random() * 0.12, 0.1)).MoveY = false;
+            DrawingObject.Instance(Cloud, vec2(new_x, Math.random() * 200 + 130), vec2(0.1 + Math.random() * 0.12, 0.1)).MoveY = false;
         });
     }
 }

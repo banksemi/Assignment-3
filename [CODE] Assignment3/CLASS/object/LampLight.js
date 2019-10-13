@@ -1,39 +1,44 @@
 class LampLight extends DrawingObject {
-    constructor(position, scale) {
-        super(position, scale);
-    }
-    static GetVertexColor(VertexColor)
+  constructor(position, scale) {
+    super(position, scale);
+  }
+  static GetVertexColor(VertexColor) {
+    VertexColor.push(vec2(130, 900), vec4(255, 230, 153, 120));
+    VertexColor.push(vec2(130, 200), vec4(255, 225, 0, 180));
+    VertexColor.push(vec2(700, 900), vec4(255, 230, 153, 180));
+    
+    VertexColor.push(vec2(130, 200), vec4(255, 225, 0, 33));
+    VertexColor.push(vec2(700, 900), vec4(255, 230, 0, 33));
+    
+    VertexColor.push(vec2(150, 200), vec4(255, 225, 0, 0));
+    VertexColor.push(vec2(720, 900), vec4(255, 230, 0, 0));
+  }
+  static GetDraw(drawlist) {
+    drawlist.push([gl.TRIANGLES, 0, 3]);
+    drawlist.push([gl.TRIANGLE_STRIP, 3, 4]);
+  }
+
+  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ Update() ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½Ç´ï¿½ ï¿½Ô¼ï¿½
+  Start() {
+  }
+
+  // ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½Ô¼ï¿½
+  onMouseClick() {
+  }
+
+  // ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½Ô¼ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+  onMousePress() {
+  }
+
+  // 1/60ï¿½Ê¸ï¿½ï¿½ï¿½ ï¿½Ò¸ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
+  Update() {
+    var a = (1000 - this.position[0]) / 950 * 1.2;
+    this.offsetcolor = vec4(a, a, a, 1);
+
+    /*this.Move(vec2(1,0));
+    if (this.position[0] >= 1000)
     {
-       VertexColor.push(vec2(130,200), vec4(255, 225, 0, 180));
-       VertexColor.push(vec2(130, 900), vec4(255, 230, 153, 120));
-       VertexColor.push(vec2(700, 900), vec4(255, 230, 153, 180));
-    }
-    static GetDraw(drawlist) 
-	{
-	  drawlist.push([gl.TRIANGLES, 0, 3]);
-    }
-
-    // ¿ÀºêÁ§Æ®°¡ Ã³À½ ³ªÅ¸³¯ °æ¿ì Update() Àü¿¡ È£ÃâµÇ´Â ÇÔ¼ö
-    Start() {
-    }
-
-    // ÇØ´ç ¿ÀºêÁ§Æ®¸¦ Å¬¸¯ÇÒ °æ¿ì ½ÇÇàµÇ´Â ÇÔ¼ö
-    onMouseClick() {
-    }
-
-    // ÇØ´ç ¿ÀºêÁ§Æ®¸¦ ¸¶¿ì½º·Î ´©¸£°í ÀÖÀ» ¶§ ½ÇÇàµÇ´Â ÇÔ¼ö(¿©·¯¹ø ½ÇÇàµÉ ¼ö ÀÖÀ½)
-    onMousePress() {
-    }
-
-    // 1/60ÃÊ¸¶´Ù ºÒ¸®´Â ÇÔ¼ö
-    Update() {
-        var a = (1000 - this.position[0]) / 950 * 1.2;
-        this.offsetcolor = vec4(a, a, a, 1);
-
-      /*this.Move(vec2(1,0));
-      if (this.position[0] >= 1000)
-      {
-         this.Move(vec2(-1000,0));
-      }*/
-    }
+       this.Move(vec2(-1000,0));
+    }*/
+  }
 }
