@@ -4,39 +4,40 @@ class Animal extends DrawingObject {
     }
     static GetVertex(vertices) {
 
-        // 다리
+        // Leg
         this.DrawRect(vertices, 389, 640, 507, 816);
         this.DrawRect(vertices, 615, 668, 716, 816);
         this.DrawRect(vertices, 464, 675, 559, 816);
         this.DrawRect(vertices, 688, 620, 777, 816);
 
-        // 몸통
+        // Body
         this.DrawCycle(vertices, 591, 531, 170, 1.3, 0.8);
         this.DrawCycle(vertices, 591, 551, 170, 1.3, 0.8);
         this.DrawCycle(vertices, 591, 581, 170, 1.3, 0.8);
 
-        // 윤곽
+        // Outline
         this.DrawCycle(vertices, 361, 430, 270);
         this.DrawCycle(vertices, 361, 430, 180);
 
-        // 귀
+        // Ear
         this.DrawCycle(vertices, 221, 285, 185 / 2);
         this.DrawCycle(vertices, 505, 285, 185 / 2);
         this.DrawCycle(vertices, 221, 285, 50);
         this.DrawCycle(vertices, 505, 285, 50);
 
-        // 눈
+        // Eye
         this.DrawCycle(vertices, 277, 381, 20);
         this.DrawCycle(vertices, 455, 381, 20);
 
-        // 입
+        // Mouse
         this.DrawCycle(vertices, 359, 526, 100);
         this.DrawCycle(vertices, 359, 526, 30, 1.2, 0.8);
 
-        // 머리카락
+        // Mane
         this.DrawCycle(vertices, 370, 276, 80);
 
     }
+	// Set Color
     static GetColor(colors) {
         this.DrawRectColor(colors, vec4(233, 153, 103, 255));
         this.DrawRectColor(colors, vec4(233, 153, 103, 255));
@@ -65,6 +66,7 @@ class Animal extends DrawingObject {
 
         this.DrawCycleColor(colors, vec4(226, 116, 94, 255));
     }
+	// Draw Vertex
     static GetDraw(drawlist) {
         let offset = 0;
 
@@ -104,5 +106,9 @@ class Animal extends DrawingObject {
         for (var i = 0; i < 4; i++) {
             colors.push(color);
         }
+    }
+
+	Start() {
+        this.z = 1100;
     }
 }

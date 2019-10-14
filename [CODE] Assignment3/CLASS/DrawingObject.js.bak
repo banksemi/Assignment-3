@@ -270,6 +270,20 @@ function DrawingSetup() {
 			fruit_x = -50;
 			j = j + 25
 		}
-	} 
-	
+<<<<<<< HEAD
+	}   
 }
+=======
+	}
+	
+	// Delete Tree loop
+    
+	/*for (var i = 0; i < 25; i++) {
+        var x = Math.random();
+        var y = Math.random();
+        DrawingObject.Instance(Star, vec2(x * 1000, y * 500), vec2(0.03, 0.03));
+    }*/
+
+   
+}
+>>>>>>> cc9711825bdd9a454fecd2029cc034bf70d3f0c5

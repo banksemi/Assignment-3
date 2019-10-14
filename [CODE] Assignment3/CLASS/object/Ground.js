@@ -1,8 +1,11 @@
+// Ground Class
 class Ground extends DrawingObject {
     constructor(position) {
         super(position, vec2(1, 1));
         this.z = -5;
     }
+
+   // Set Ground Vertex
     static GetVertex(vertices) {
         // The center of the hexagon.
         vertices.push(vec2(500, 500));
@@ -16,16 +19,16 @@ class Ground extends DrawingObject {
         }
         this.temp_vertices = vertices;
     }
+   //Set Ground Color
     static GetColor(colors) {
         for (var i = 0; i < 362; i++) {
             var a = this.temp_vertices[i][1] / 500;
             colors.push(vec4(250 * a, 236 * a, 197 * a, 255)); // center
         }
     }
+   //Draw Vertex
     static GetDraw(drawlist) {
         drawlist.push([gl.TRIANGLE_FAN, 0, 362])
     }
-    Update() {
-
-    }
+   
 }

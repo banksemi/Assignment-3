@@ -1,8 +1,10 @@
+// Light (The Light at the far right of the Sky) Class
 class Light extends DrawingObject {
     constructor(position, scale) {
         super(position, scale);
         this.z = 1000;
     }
+   // Set Vertex 
     static GetVertex(vertices) {
         // The center of the hexagon.
         vertices.push(vec2(500, 500));
@@ -26,6 +28,7 @@ class Light extends DrawingObject {
             vertices.push(vec2(x, y));
         }
     }
+   // Set Color
     static GetColor(colors) {
         colors.push(vec4(255, 255, 255, 30)); // center
 
@@ -39,6 +42,7 @@ class Light extends DrawingObject {
             colors.push(vec4(255, 111, 0, 0));
         }
     }
+   // Draw Vertex
     static GetDraw(drawlist) {
         drawlist.push([gl.TRIANGLE_FAN, 0, 362]);
         drawlist.push([gl.TRIANGLE_FAN, 362, 362]);

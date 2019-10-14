@@ -2,7 +2,7 @@ class Wall extends DrawingObject {
     constructor(position, scale) {
         super(position, scale);
     }
-    // 버택스랑 컬러를 동시에 입력
+    // Input vertex and color in same time
 	static GetVertexColor(VertexColor)
 	{
 		VertexColor.push(vec2(0, 500), vec4(0, 0, 0, 255));
@@ -74,6 +74,8 @@ class Wall extends DrawingObject {
         
 
 	}
+
+	// Draw
     static GetDraw(drawlist) {
         drawlist.push([gl.TRIANGLES, 0, 3]);
         drawlist.push([gl.TRIANGLES, 3, 3]);
@@ -97,29 +99,5 @@ class Wall extends DrawingObject {
 		drawlist.push([gl.LINES, 42, 2]);
 		drawlist.push([gl.LINES, 44, 2]);
         
-    }
-
-    // 오브젝트가 처음 나타날 경우 Update() 전에 호출되는 함수
-    Start() {
-    }
-
-    // 해당 오브젝트를 클릭할 경우 실행되는 함수
-    onMouseClick() {
-    }
-
-    // 해당 오브젝트를 마우스로 누르고 있을 때 실행되는 함수(여러번 실행될 수 있음)
-    onMousePress() {
-    }
-
-    // 1/60초마다 불리는 함수
-    Update() {
-        /*var a = 1 - (800 - this.position[1]) / 500 * 1.2;
-        this.offsetcolor = vec4(a, a, a, 1);
-
-		this.Move(vec2(1,0));
-		if (this.position[0] >= 1000)
-		{
-			this.Move(vec2(-1000,0));
-		}*/
     }
 }

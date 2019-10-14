@@ -47,7 +47,7 @@ class Fruit extends DrawingObject {
             this.z = 1;
         }
     }
-	// 1/60�ʸ��� �Ҹ��� �Լ�
+	// 1/60 update object
     Update() {
 		this.outline = false;
 		if (this.timeout > 0 && --this.timeout == 0)
@@ -55,15 +55,15 @@ class Fruit extends DrawingObject {
         if (this.speed != null) {
             this.rotation += this.speed[0] * 2.5;
             this.Move(this.speed);
-			// 땅에 닿았을 때
+			// Touch ground
             if (this.position[1] > 850) {
 				if (this.timeout == -1)
 					this.timeout = 300;
-				// 떨어지는 중일때에는 y 반전. 에너지 감소
+				// position go down -> y value reverse
 				if (this.speed[1] > 0)
 					this.speed = vec2(this.speed[0] * 0.7, this.speed[1] * -1 * (0.1 + Math.random() * 0.2));
 			} else {
-				// 하늘에 떠있을때 중력
+				// in the air get gravity
 				this.speed[1] += 0.2;
 			}
         }

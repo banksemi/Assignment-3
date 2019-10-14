@@ -1,9 +1,11 @@
+// Star Class
 class Star extends SkyObject {
     static last_clicked_star = null;
     static mouse_line = null;
     rgb = 0;
     flag = 0; // it is flag to select in 'plus' and 'minus'
     mouse = null;
+
     static GetVertex(vertices) {
         // The center of the hexagon.
         vertices.push(vec2(500, 500));
@@ -26,6 +28,7 @@ class Star extends SkyObject {
         vertices.push(vec2(500, 370)); // top
 
         vertices.push(vec2(500, 500));
+
         // From circle, move the angle 60 degrees to get the x, y. And add them to the array of vertexs.
         for (var i = 0; i < 7; i++) {
             var agree = i * 60;
@@ -107,7 +110,7 @@ class Star extends SkyObject {
         Star.last_clicked_star = this;
     }
 }
-
+// Show Star Effect Class 
 class StarEffect extends DrawingObject {
     static instance = null;
     time = 0;
@@ -133,6 +136,7 @@ class StarEffect extends DrawingObject {
             this.Dispose();
     }
 }
+// if you drag on mouse for star, it works.
 class StarMouse extends DrawingObject {
     timeout = 0;
     connected_object = null;

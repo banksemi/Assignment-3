@@ -1,3 +1,4 @@
+// Cloud Class
 class Cloud extends SkyObject {
     static CycleCount = 14;
     static CyclePoint = 30;

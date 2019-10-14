@@ -25,19 +25,19 @@
             float s = sin( Rotation );
             float c = cos( Rotation );
 
-            // 기존 오브젝트 원본 버텍스의 중점을 0,0으로 이동
+            // Mobe original object
             gl_Position.xy -= 500.0;
 
-            // 사이즈 조절
+            // Size
             gl_Position.xy *= Scale.xy;
 
-            // 회전
+            // Rotation
             vec4 Temp = gl_Position;
             gl_Position.x = -s * (Temp.y) + c * (Temp.x);
             gl_Position.y =  s * (Temp.x) + c * (Temp.y);
 
 
-            // 0,0에서 필요한만큼 좌표 이동
+            // Move position
             gl_Position.xy += (Offset.xy);
 
 
@@ -65,7 +65,9 @@
         {
             gl_FragColor = (fColor * OffsetColor) / 255.0;
         }
-        </script>
+    </script>
+
+	<!-- Call javascipt object -->
     <script type="text/javascript" src="../Common/webgl-utils.js"></script>
     <script type="text/javascript" src="../Common/InitShaders.js"></script>
     <script type="text/javascript" src="../Common/MV.js"></script>
@@ -78,10 +80,7 @@
     <script type="text/javascript" src="object/SkyObject/Cloud.js"></script>
     <script type="text/javascript" src="object/SkyObject/Sky.js"></script>
 
-    <script type="text/javascript" src="object/Tree.js"></script>
-    <script type="text/javascript" src="object/Meteor.js"></script>
     <script type="text/javascript" src="object/Ground.js"></script>
-    <script type="text/javascript" src="object/Weed.js"></script>
     <script type="text/javascript" src="object/Animal.js"></script>
     <script type="text/javascript" src="object/Light.js"></script>
     <script type="text/javascript" src="object/Wall.js"></script>
@@ -127,29 +126,7 @@
         <button
             onclick="document.getElementById('clock_speed').value = document.getElementById('clock_speed').value * -1;">Change the direction</button>
         <button onclick="document.getElementById('clock_speed').value = 0">Stop</button>
-        
-        
-            <div>
-                <br>
-                <b>!! If you click on a mouse in a landscape painting,<br> 
-                the fruit is produced in the mouse !!</b>
-                <b>!! And if you click on a star and drag it to other star, <br>
-                    you can make Constellation !!</b>
-                <br>
-                if click the [Box Button] <br>
-                -> The box appears in the lower right corner.<br> 
-                -> (can click the button a total of six times)<br><br>
-                Below the Box Button<br>
-                -> [first text box means time]<br>
-                -> [second text box means the number of objects]<br><br>
-                If adjusting [the button on the line]<br> 
-                -> controls the speed of time<br><br>
-                If click the [change the direction button]<br> 
-                -> can change the direction of time movement<br>
-                (especially sky movement)<br><br>
-                if click the [stop button]<br>
-                -> can stop the time (sky movement)          
-            </div>
+
     </div>
 </body>
 
