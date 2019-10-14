@@ -4,23 +4,23 @@ class StreetLamp extends DrawingObject {
     }
     static GetVertexColor(VertexColor)
    {
-		VertexColor.push(vec2(50, 0), vec4(100, 100, 100, 255));
+      VertexColor.push(vec2(50, 0), vec4(100, 100, 100, 255));
         VertexColor.push(vec2(130, 0), vec4(255, 255, 255, 255));
         VertexColor.push(vec2(50, 900), vec4(100, 100, 100, 255));
         VertexColor.push(vec2(130, 900),vec4(255, 255, 255, 255));
 
-		VertexColor.push(vec2(50, 0),vec4(100, 100, 100, 255));
-		VertexColor.push(vec2(65, 0), vec4(127, 127, 127, 255));
-        VertexColor.push(vec2(50, 900), vec4(10,10, 10, 210));
+      VertexColor.push(vec2(50, 0),vec4(100, 100, 100, 255));
+      VertexColor.push(vec2(65, 0), vec4(127, 127, 127, 255));
+        VertexColor.push(vec2(50, 900), vec4(10, 10, 10, 210));
         VertexColor.push(vec2(65, 900), vec4(127, 127, 127, 255));
 
-		VertexColor.push(vec2(130,200), vec4(255, 255, 255, 255));
+      VertexColor.push(vec2(130,200), vec4(255, 255, 255, 255));
         VertexColor.push(vec2(260, 200), vec4(127,127, 127, 255));
         VertexColor.push(vec2(130, 270),vec4(255, 255, 255, 255));
         VertexColor.push(vec2(260, 270),  vec4(127,127, 127, 255));
 
-		
-		VertexColor.push(vec2(130,265), vec4(255, 255, 0, 200));
+      
+      VertexColor.push(vec2(130,265), vec4(255, 255, 0, 200));
         VertexColor.push(vec2(190, 265), vec4(255, 255, 0, 200));
         VertexColor.push(vec2(130, 275),vec4(255, 255, 0, 200));
         VertexColor.push(vec2(190, 275), vec4(255, 255, 0, 255));
@@ -28,23 +28,52 @@ class StreetLamp extends DrawingObject {
    }
     static GetDraw(drawlist) {
         drawlist.push([gl.TRIANGLE_STRIP, 0, 4]);
-	    drawlist.push([gl.TRIANGLE_STRIP, 4, 4]);
-		drawlist.push([gl.TRIANGLE_STRIP, 8, 4]);
-	    drawlist.push([gl.TRIANGLE_STRIP, 12, 4]);}
+       drawlist.push([gl.TRIANGLE_STRIP, 4, 4]);
+      drawlist.push([gl.TRIANGLE_STRIP, 8, 4]);
+       drawlist.push([gl.TRIANGLE_STRIP, 12, 4]);}
 
-    // ¿ÀºêÁ§Æ®°¡ Ã³À½ ³ªÅ¸³¯ °æ¿ì Update() Àü¿¡ È£ÃâµÇ´Â ÇÔ¼ö
+    // ì˜¤ë¸Œì íŠ¸ê°€ ì²˜ìŒ ë‚˜íƒ€ë‚  ê²½ìš° Update() ì „ì— í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
     Start() {
+        this.z = 1000;
     }
 
-    // ÇØ´ç ¿ÀºêÁ§Æ®¸¦ Å¬¸¯ÇÒ °æ¿ì ½ÇÇàµÇ´Â ÇÔ¼ö
+    // í•´ë‹¹ ì˜¤ë¸Œì íŠ¸ë¥¼ í´ë¦­í•  ê²½ìš° ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
     onMouseClick() {
     }
 
-    // ÇØ´ç ¿ÀºêÁ§Æ®¸¦ ¸¶¿ì½º·Î ´©¸£°í ÀÖÀ» ¶§ ½ÇÇàµÇ´Â ÇÔ¼ö(¿©·¯¹ø ½ÇÇàµÉ ¼ö ÀÖÀ½)
+    // í•´ë‹¹ ì˜¤ë¸Œì íŠ¸ë¥¼ ë§ˆìš°ìŠ¤ë¡œ ëˆ„ë¥´ê³  ìžˆì„ ë•Œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜(ì—¬ëŸ¬ë²ˆ ì‹¤í–‰ë  ìˆ˜ ìžˆìŒ)
     onMousePress() {
     }
+   ColorUpdate(colors) {
+      colors.push(vec4(100, 100, 100, 255));
+        colors.push(vec4(255, 255, 255, 255));
+        colors.push(vec4(100, 100, 100, 255));
+        colors.push(vec4(255, 255, 255, 255));
 
-    // 1/60ÃÊ¸¶´Ù ºÒ¸®´Â ÇÔ¼ö
+      colors.push(vec4(100, 100, 100, 255));
+      colors.push(vec4(127, 127, 127, 255));
+        colors.push(vec4(10, 10, 10, 210));
+        colors.push(vec4(127, 127, 127, 255));
+
+      colors.push(vec4(255, 255, 255, 255));
+        colors.push(vec4(127,127, 127, 255));
+        colors.push(vec4(255, 255, 255, 255));
+        colors.push(vec4(127,127, 127, 255));
+      
+      if (Sky.instance.GlobalTime >= 9 && Sky.instance.GlobalTime < 19){
+         colors.push(vec4(100, 100, 100, 200));
+         colors.push(vec4(100, 100, 100, 200));
+         colors.push(vec4(100, 100, 100, 200));
+         colors.push(vec4(100, 100, 100, 255));
+      }
+      else {
+         colors.push(vec4(255, 255, 0, 200));
+         colors.push(vec4(255, 255, 0, 200));
+         colors.push(vec4(255, 255, 0, 200));
+         colors.push(vec4(255, 255, 0, 255));
+      }
+   }
+    // 1/60ì´ˆë§ˆë‹¤ ë¶ˆë¦¬ëŠ” í•¨ìˆ˜
     Update() {
         var a = (1000 - this.position[0]) / 950 * 1.2;
         this.offsetcolor = vec4(a, a, a, 1);
