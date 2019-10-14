@@ -21,7 +21,7 @@ class SkyObject extends DrawingObject {
     // 1/60초마다 불리는 함수
     Update() {
         if (this.MoveY) {
-            this.Move(vec2(-1.7 * Sky.instance.Speed * this.Speed, (this.position[0] - 500.0) / -4200 *  Sky.instance.Speed));   
+            this.Move(vec2(-1.7 * Sky.instance.Speed * this.Speed, (this.position[0] - 500.0) / -3000 *  Sky.instance.Speed));   
         }
         else
             this.Move(vec2(-1.7 * Sky.instance.Speed * this.Speed, 0));

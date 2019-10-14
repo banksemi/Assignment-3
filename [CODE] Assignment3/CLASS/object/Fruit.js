@@ -1,7 +1,10 @@
 class Fruit extends DrawingObject {
+    speed = null;
     constructor(position) {
         super(position, vec2(1, 1));
         this.z = -4;
+        this.rotation = -Math.random() * 30;
+        this.click_area_scale = vec2(0.6, 0.6);
     }
     static GetVertex(vertices) {
 		vertices.push(vec2(500, 500));
@@ -33,9 +36,25 @@ class Fruit extends DrawingObject {
 		drawlist.push([gl.LINES, 0, 2])
         drawlist.push([gl.TRIANGLE_FAN, 2, 362])
     }
-    
+    onMouseOver() {
+        this.outline = true;
+        this.offsetcolor = vec4(0.6, 0.6, 0.6, 1);
+    }
+    onMousePress() {
+        if (this.speed == null) {
+            this.speed = vec2(Math.random() * 3 - 1.5, -4);
+            this.z = 1;
+        }
+    }
 	// 1/60�ʸ��� �Ҹ��� �Լ�
     Update() {
+        if (this.speed != null) {
+            this.rotation += this.speed[0] * 2.5;
+            this.speed[1] += 0.2;
+            this.Move(this.speed);
+            if (this.position[1] > 1000) this.Dispose();
+        }
+        this.outline = false;
         var a = (1200 - this.position[0]) / 1300 * 1.0;
         this.offsetcolor = vec4(a, a, a, 1);
     }
