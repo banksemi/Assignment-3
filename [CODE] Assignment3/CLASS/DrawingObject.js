@@ -125,8 +125,12 @@ class DrawingObject {
         this.Update();
 
         // Check Mouse Over
-        if (this.CheckIncluded(mouse.position[0],mouse.position[1]))
+        if (this.CheckIncluded(mouse.position[0],mouse.position[1])) {
+            
             this.onMouseOver();
+            if (mouse.clicked == true)
+                this.onMousePress();
+        }
         // Setting uniform by using each object value
         gl.uniform4f(gl.offset, this.position[0], this.position[1], 0, 0);
         gl.uniform4f(gl.scale, this.scale[0], this.scale[1], 0, 0);
@@ -257,7 +261,7 @@ function DrawingSetup() {
 		var j = 50;
 		fruit_x = fruit_x + j;
         var y = Math.random();
-        DrawingObject.Instance(Fruit, vec2(fruit_x, y * 140 + 395), vec2(0.1, 0.1));
+        DrawingObject.Instance(Fruit, vec2(fruit_x, y * 110 + 395), vec2(0.1, 0.1));
 		if (fruit_x >= 1000)
 		{
 			fruit_x = -50;

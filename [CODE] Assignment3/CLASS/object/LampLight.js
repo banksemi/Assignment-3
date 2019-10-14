@@ -33,12 +33,20 @@ class LampLight extends DrawingObject {
   // 1/60�ʸ��� �Ҹ��� �Լ�
   Update() {
     var a = (1000 - this.position[0]) / 950 * 1.2;
-    this.offsetcolor = vec4(a, a, a, 1);
+   
+   if ( Sky.instance.GlobalTime >= 9 && Sky.instance.GlobalTime < 19)
+   { 
+    this.offsetcolor = vec4(a, a, a, 0);
+   }
+   else{
+       this.offsetcolor = vec4(a, a, a, 1);
+   }
 
-    /*this.Move(vec2(1,0));
-    if (this.position[0] >= 1000)
-    {
-       this.Move(vec2(-1000,0));
-    }*/
+
+   if ( Sky.instance.GlobalTime >= 19.2 && Sky.instance.GlobalTime < 20)
+   { 
+    this.offsetcolor = vec4(a, a, a, 0);
+   }
+  
   }
 }

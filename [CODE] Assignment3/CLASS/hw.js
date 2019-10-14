@@ -86,8 +86,8 @@ window.onload = function init() {
         
         var target = event.target;
         mouse.position = vec2(event.offsetX / target.width * 1000, event.offsetY / target.height * 1000);
-        if (mouse.clicked == false) return;
-        MouseEvent(event, function(object){object.onMousePress();})
+        //if (mouse.clicked == false) return;
+        //MouseEvent(event, function(object){object.onMousePress();})
     });
 
 	//boxNum ==1 => Show Big Box
