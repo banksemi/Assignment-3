@@ -16,6 +16,8 @@ class Bush extends DrawingObject {
         }
         this.temp_vertices = vertices;
     }
+
+	// Set color
     static GetColor(colors) {
         for (var i = 0; i < 362; i++) {
             var a = this.temp_vertices[i][1] / 500;
@@ -26,7 +28,7 @@ class Bush extends DrawingObject {
         drawlist.push([gl.TRIANGLE_FAN, 0, 362])
     }
     
-	// 1/60초마다 불리는 함수
+	// Update color by position
     Update() {
         var a = (1200 - this.position[0]) / 1300 * 1.0;
         this.offsetcolor = vec4(a, a, a, 1);

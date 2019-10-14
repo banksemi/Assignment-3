@@ -1,12 +1,14 @@
 var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
-
+var boxNum = 0;
 if(!is_chrome)
 {
 	  alert('Unsupported browser. Use Chrome');
 }  
-
+var mouse;
 var gl;
+var debug;
 window.onload = function init() {
+    debug = this.document.getElementById("debug");
     var canvas = document.getElementById("gl-canvas");
 
     gl = WebGLUtils.setupWebGL(canvas);
@@ -28,29 +30,21 @@ window.onload = function init() {
     var program = initShaders(gl, "vertex-shader", "fragment-shader");
     gl.useProgram(program);
 
-    // Load the data into the GPU
-    var bufferId = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, bufferId);
-    gl.bufferData(gl.ARRAY_BUFFER, flatten(DrawingObject.vertices), gl.STATIC_DRAW);
+    this.gl.changeBuffer = function (name, array, elementsize) {
+        // Load the data into the GPU
+        var bufferId = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, bufferId);
+        gl.bufferData(gl.ARRAY_BUFFER, flatten(array), gl.STATIC_DRAW);
 
-    console.log(DrawingObject.vertices);
-    // Associate out shader variables with our data buffer
+        // Associate out shader variables with our data buffer
 
-    var vPosition = gl.getAttribLocation(program, "vPosition");
-    gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(vPosition);
+        var attribute = gl.getAttribLocation(program, name);
+        gl.vertexAttribPointer(attribute, elementsize, gl.FLOAT, false, 0, 0);
+        gl.enableVertexAttribArray(attribute);
+    }
 
-    // // Load the data into the GPU
-
-    var bufferId = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, bufferId);
-    gl.bufferData(gl.ARRAY_BUFFER, flatten(DrawingObject.colors), gl.STATIC_DRAW);
-
-    // Associate out shader variables with our data buffer
-
-    var vColor = gl.getAttribLocation(program, "vColor");
-    gl.vertexAttribPointer(vColor, 4, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(vColor);
+    this.gl.changeBuffer("vPosition", DrawingObject.vertices, 2);
+    this.gl.changeBuffer("vColor", DrawingObject.colors, 4);
 
     // Setting Uniform Variable
     this.gl.offset = gl.getUniformLocation(program, "Offset");
@@ -58,63 +52,69 @@ window.onload = function init() {
     this.gl.scale = gl.getUniformLocation(program, "Scale");
     this.gl.offsetcolor = gl.getUniformLocation(program, "OffsetColor");
     this.gl.rotation = gl.getUniformLocation(program, "Rotation");
-
-
-    canvas.addEventListener("mouseclick", function (event)
-    {
+    this.gl.useCustomColor = gl.getUniformLocation(program, "useCustomColor");
+    mouse = DrawingObject.Instance(Mouse, vec2(0,0), vec2(1,1));
+    function MouseEvent(event, object_event) {
         var target = event.target;
-        var x = event.x / target.width * 1000;
-        var y = event.y / target.height * 1000;
-
+        mouse.position = vec2(event.offsetX / target.width * 1000, event.offsetY / target.height * 1000);
+        object_event(mouse);
         var object_size = DrawingObject.Object.length; // Do not update the object added in updating.
         for (var i = 0; i < object_size; i++) {
             var item = DrawingObject.Object[i];
-            var x1 = item.position[0] - 500 * item.scale[0];
-            var x2 = item.position[0] + 500 * item.scale[0];
-            var y1 = item.position[1] - 500 * item.scale[1];
-            var y2 = item.position[1] + 500 * item.scale[1];
-            if (x1 <= x && x2 >= x && y1 <= y && y2 >= y) {
-
-                DrawingObject.Object[i].onMouseClick();
-            }
-        }
-    });
-    
-    var mousebutton = false;
-    canvas.addEventListener("mousedown", function (event)
-    {
-        mousebutton = true;
-        canvas_mousepress(event);
-    });
-    canvas.addEventListener("mouseup", function (event)
-    {
-        mousebutton = false;
-    });
-    canvas.addEventListener("mousemove", function (event)
-    {
-        canvas_mousepress(event);
-    });
-
-    function canvas_mousepress(event)
-    {
-        if (mousebutton == false) return;
-        var target = event.target;
-        var x = event.x / target.width * 1000;
-        var y = event.y / target.height * 1000;
-
-        var object_size = DrawingObject.Object.length; // Do not update the object added in updating.
-        for (var i = 0; i < object_size; i++) {
-            var item = DrawingObject.Object[i];
-            var x1 = item.position[0] - 500 * item.scale[0];
-            var x2 = item.position[0] + 500 * item.scale[0];
-            var y1 = item.position[1] - 500 * item.scale[1];
-            var y2 = item.position[1] + 500 * item.scale[1];
-            if (x1 <= x && x2 >= x && y1 <= y && y2 >= y) {
-
-                DrawingObject.Object[i].onMousePress();
+            if (item instanceof Mouse) continue;
+            if (item.CheckIncluded(mouse.position[0], mouse.position[1])) {
+                object_event(item);
             }
         }
     }
+    canvas.addEventListener("mouseclick", function (event) {
+        MouseEvent(event, function(object){object.onMouseClick();})
+    });
+    
+    
+    canvas.addEventListener("mousedown", function (event) {
+        mouse.clicked = true;
+        MouseEvent(event, function(object) {object.onMouseClick()})
+        MouseEvent(event, function(object) {object.onMousePress()})
+    });
+    canvas.addEventListener("mouseup", function (event) {
+        mouse.clicked = false;
+        MouseEvent(event, function(object) {object.onMouseUp()})
+    });
+    
+    canvas.addEventListener("mousemove", function (event) {
+        
+        var target = event.target;
+        mouse.position = vec2(event.offsetX / target.width * 1000, event.offsetY / target.height * 1000);
+        //if (mouse.clicked == false) return;
+        //MouseEvent(event, function(object){object.onMousePress();})
+    });
+
+	//boxNum ==1 => Show Big Box
+	//boxNum ==2 => Show Big+Small Box
+	//boxNum ==3 => Show Big Box
+	//boxNum ==4 => Show None Box
+	//boxNum ==5 => Show Big+Small Box
+	//boxNum ==6 => Show None Box
+	var boxButton = document.getElementById("boxButton");
+	boxButton.addEventListener("click", function() {
+		boxNum++;
+
+		if(boxNum ==1){
+			DrawingObject.Instance(Box, vec2(500, 500), vec2(1, 1));
+		}
+		else if(boxNum ==2 ){
+			DrawingObject.Instance(SmallBox, vec2(500, 500), vec2(1, 1));
+		}
+		else if(boxNum ==5){
+			DrawingObject.Instance(Box, vec2(500, 500), vec2(1, 1));
+			DrawingObject.Instance(SmallBox, vec2(500, 500), vec2(1, 1));
+		}
+		else if(boxNum ==6){
+			boxNum =0;
+		}
+	});
+
     // Start animation function
     animationLoop();
 };
@@ -142,7 +142,6 @@ function animationLoop() {
     render();
 }
 
-var next_meteor = 0;
 function render() {
     // Reset screen
     gl.clear(gl.COLOR_BUFFER_BIT);
@@ -171,15 +170,8 @@ function render() {
 
     // Draw each object.
     var object_size = DrawingObject.Object.length; // Do not update the object added in updating.
+    debug.value = "Count of Object: " + object_size;
     for (var i = 0; i < object_size; i++) {
         DrawingObject.Object[i].GraphicUpdate();
-    }
-
-    // Meteor effect
-    next_meteor--;
-    if (next_meteor <= 0) {
-        next_meteor = Math.random() * 60 + 10;
-        var x = Math.random();
-        DrawingObject.Instance(Meteor, vec2(x * 1000, -10), vec2(0.03, 0.03));
     }
 }
