@@ -270,6 +270,6 @@ function DrawingSetup() {
 			fruit_x = -50;
 			j = j + 25
 		}
-	}   
-   
+	} 
+	
 }
